@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tanaw — Gaze-Based Digital Keyboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f4f0;
+      --gray-100: #e8e7e3;
+      --gray-200: #c8c7c3;
+      --gray-400: #888785;
+      --gray-700: #2a2a28;
+      --accent: #f5f4f0;
+      --border: rgba(245,244,240,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Manrope', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 4rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,10,0.7);
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span { font-style: italic; color: var(--gray-400); }
+
+    nav ul {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    nav ul a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--white); }
+
+    .nav-cta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--black) !important;
+      background: var(--white);
+      padding: 0.55rem 1.2rem;
+      border-radius: 2px;
+      text-decoration: none !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--gray-200) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 60vw;
+      height: 60vw;
+      border-radius: 50%;
+      border: 1px solid rgba(245,244,240,0.06);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 5%;
+      right: 5%;
+      width: 35vw;
+      height: 35vw;
+      border-radius: 50%;
+      border: 1px solid rgba(245,244,240,0.04);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      border: 1px solid var(--border);
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gray-400);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--gray-200);
+      line-height: 1.75;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.07em;
+      background: var(--white);
+      color: var(--black);
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--gray-200); }
+
+    .btn-ghost {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.07em;
+      color: var(--gray-400);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--white); }
+    .btn-ghost::after { content: '→'; }
+
+    /* HERO VISUAL */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .eye-ring {
+      width: min(420px, 38vw);
+      height: min(420px, 38vw);
+      border-radius: 50%;
+      border: 1px solid rgba(245,244,240,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .eye-ring::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,244,240,0.08);
+    }
+
+    .eye-ring::after {
+      content: '';
+      position: absolute;
+      inset: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,244,240,0.05);
+    }
+
+    .eye-core {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eye-pupil {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--black);
+      position: relative;
+    }
+
+    .eye-pupil::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--white);
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(420px, 38vw);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245,244,240,0.3), transparent);
+      transform: translate(-50%, -50%);
+      animation: scan 3s ease-in-out infinite;
+    }
+
+    @keyframes scan {
+      0%, 100% { transform: translate(-50%, -50%) scaleX(0.3); opacity: 0; }
+      50% { transform: translate(-50%, -50%) scaleX(1); opacity: 1; }
+    }
+
+    .floating-key {
+      position: absolute;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gray-400);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.6rem;
+      border-radius: 2px;
+      background: rgba(10,10,10,0.6);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .fk1 { top: 10%; left: 5%; animation-delay: 0s; }
+    .fk2 { top: 20%; right: 5%; animation-delay: 0.8s; }
+    .fk3 { bottom: 20%; left: 0%; animation-delay: 1.6s; }
+    .fk4 { bottom: 10%; right: 8%; animation-delay: 2.4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50% { transform: translateY(-8px); opacity: 0.9; }
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.8rem;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    /* HOW IT WORKS */
+    section {
+      padding: 7rem 4rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gray-400);
+    }
+
+    /* HOW IT WORKS */
+    .hiw-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 5rem;
+      align-items: start;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:first-child { border-top: 1px solid var(--border); }
+
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gray-400);
+      padding-top: 0.2rem;
+    }
+
+    .step-content h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--gray-200);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* KEYBOARD VIZ */
+    .keyboard-demo {
+      background: var(--gray-700);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 8rem;
+    }
+
+    .kb-row {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+      justify-content: center;
+    }
+
+    .kb-key {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: rgba(245,244,240,0.06);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.5rem 0.65rem;
+      min-width: 36px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--gray-200);
+    }
+
+    .kb-key.active {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .kb-key.space { flex: 1; }
+
+    .kb-output {
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      background: rgba(245,244,240,0.04);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--gray-200);
+      min-height: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .kb-gaze-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .gaze-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--white);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    .gaze-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    /* FEATURES */
+    .features-section { background: var(--gray-700); }
+
+    .features-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+
+    .features-desc {
+      font-size: 1rem;
+      color: var(--gray-200);
+      line-height: 1.75;
+      font-weight: 300;
+      align-self: end;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .feature-card {
+      background: var(--gray-700);
+      padding: 2.5rem 2rem;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--gray-400);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* WHO IS IT FOR */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .audience-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .audience-card:hover { border-color: rgba(245,244,240,0.3); }
+
+    .audience-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .audience-card p {
+      font-size: 0.875rem;
+      color: var(--gray-400);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .audience-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding: 8rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70vw;
+      height: 70vw;
+      border-radius: 50%;
+      border: 1px solid rgba(245,244,240,0.05);
+      pointer-events: none;
+    }
+
+    .cta-word {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 6vw, 7rem);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      display: block;
+    }
+
+    .cta-word em {
+      font-style: italic;
+      color: var(--gray-400);
+    }
+
+    .cta-sub {
+      font-size: 1rem;
+      color: var(--gray-400);
+      margin: 2rem auto;
+      max-width: 480px;
+      font-weight: 300;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--gray-400);
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--gray-400);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-left > * {
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
+    .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
+    .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+      .hero-visual { display: none; }
+      .stats-bar { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      section { padding: 5rem 1.5rem; }
+      .hiw-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .features-header { grid-template-columns: 1fr; gap: 1rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Tanaw<span>.</span></a>
+  <ul>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#for">Who It's For</a></li>
+    <li><a href="#contact" class="nav-cta">Get Access</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top: 8rem;">
+  <div class="hero-left">
+    <div class="hero-tag">Assistive Communication Technology</div>
+    <h1 class="hero-title">
+      See it.<br>
+      <em>Type it.</em>
+    </h1>
+    <p class="hero-desc">
+      Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — powered entirely by eye movement.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request Early Access</a>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="eye-ring">
+      <div class="scan-line"></div>
+      <div class="eye-core">
+        <div class="eye-pupil"></div>
+      </div>
+    </div>
+    <div class="floating-key fk1">A</div>
+    <div class="floating-key fk2">H E L P</div>
+    <div class="floating-key fk3">Y E S</div>
+    <div class="floating-key fk4">⏎</div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Hands-Free Operation</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">< 1s</span>
+    <span class="stat-label">Key Selection Latency</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">26+</span>
+    <span class="stat-label">Languages Supported</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-eyebrow">The Process</div>
+  <h2 class="section-title">Your eyes are<br><em>the keyboard.</em></h2>
+  <div class="hiw-grid">
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h3>Camera Tracks Your Gaze</h3>
+          <p>A standard front-facing camera — or an external eye-tracking device — reads your eye position in real time with precision calibration.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h3>Gaze Lands on a Key</h3>
+          <p>The on-screen keyboard highlights the key your eyes are fixed on. A short dwell time (customizable) confirms the selection — no click needed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h3>Words Are Built in Real Time</h3>
+          <p>Predictive text and phrase suggestions reduce effort — users type full sentences using minimal eye movements.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <h3>Speech Output (Optional)</h3>
+          <p>Tanaw can read composed text aloud via text-to-speech, enabling verbal communication in social or clinical settings.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="keyboard-demo">
+        <div class="kb-gaze-indicator">
+          <div class="gaze-dot"></div>
+          <span class="gaze-label">Gaze Active</span>
+        </div>
+        <div style="margin-top: 1.2rem;">
+          <div class="kb-row">
+            <div class="kb-key">Q</div><div class="kb-key">W</div><div class="kb-key">E</div><div class="kb-key">R</div><div class="kb-key">T</div><div class="kb-key active" id="ykey">Y</div><div class="kb-key">U</div><div class="kb-key">I</div><div class="kb-key">O</div><div class="kb-key">P</div>
+          </div>
+          <div class="kb-row">
+            <div class="kb-key">A</div><div class="kb-key">S</div><div class="kb-key">D</div><div class="kb-key">F</div><div class="kb-key">G</div><div class="kb-key">H</div><div class="kb-key">J</div><div class="kb-key">K</div><div class="kb-key">L</div>
+          </div>
+          <div class="kb-row">
+            <div class="kb-key">Z</div><div class="kb-key">X</div><div class="kb-key">C</div><div class="kb-key">V</div><div class="kb-key">B</div><div class="kb-key">N</div><div class="kb-key">M</div>
+          </div>
+          <div class="kb-row">
+            <div class="kb-key space">SPACE</div><div class="kb-key">⌫</div>
+          </div>
+        </div>
+        <div class="kb-output" id="kb-output">I need help</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-section">
+  <div class="features-header">
+    <div>
+      <div class="section-eyebrow">Capabilities</div>
+      <h2 class="section-title">Built for<br><em>real needs.</em></h2>
+    </div>
+    <p class="features-desc">
+      Tanaw is designed in close collaboration with clinicians and occupational therapists to ensure it meets the nuanced needs of patients with ALS, cerebral palsy, spinal cord injuries, locked-in syndrome, and more.
+    </p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/></svg>
+      </div>
+      <h3>Precision Eye Tracking</h3>
+      <p>Works with standard webcams and dedicated eye-tracking hardware. Sub-degree accuracy ensures confident key selection.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+      </div>
+      <h3>Smart Word Prediction</h3>
+      <p>AI-powered suggestions learn your communication patterns to reduce keystrokes and speed up expression over time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <h3>Custom Phrase Banks</h3>
+      <p>Caregivers and clinicians can pre-load common phrases for fast access — ideal for urgent needs or daily routines.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 013 3v7a3 3 0 01-6 0V5a3 3 0 013-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v3M8 22h8"/></svg>
+      </div>
+      <h3>Text-to-Speech Output</h3>
+      <p>High-quality voice synthesis reads composed messages aloud in real time — multiple voice options and languages.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h3>Adjustable Interface</h3>
+      <p>Key size, dwell time, color contrast, and layout can all be tuned by a clinician to match each patient's capability.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Privacy-First Design</h3>
+      <p>All processing happens on-device. No sensitive health or communication data is sent to external servers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section id="for">
+  <div class="section-eyebrow">Patients & Caregivers</div>
+  <h2 class="section-title">Who Tanaw<br><em>helps.</em></h2>
+  <div class="audience-grid">
+    <div class="audience-card">
+      <div class="audience-tag">Neurological</div>
+      <h3>ALS & Motor Neuron Disease</h3>
+      <p>As voluntary muscle control declines, Tanaw preserves the ability to communicate — giving patients independence for as long as possible.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-tag">Developmental</div>
+      <h3>Cerebral Palsy</h3>
+      <p>Individuals with limited limb control can use gaze to compose messages, make choices, and engage in education and social life.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-tag">Acquired Injury</div>
+      <h3>Spinal Cord Injury</h3>
+      <p>Patients with high-level cervical injuries retain full cognitive function but lack motor ability — Tanaw gives them a voice without physical effort.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-tag">Intensive Care</div>
+      <h3>Locked-In Syndrome</h3>
+      <p>For patients with complete or near-complete paralysis, Tanaw may be the primary or only means of expressive communication.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <span class="cta-word">Every<br>patient</span>
+  <span class="cta-word"><em>deserves a voice.</em></span>
+  <p class="cta-sub">Tanaw is currently in clinical pilot. Request access for your facility, research project, or loved one.</p>
+  <div class="cta-actions">
+    <a href="mailto:hello@tanaw.app" class="btn-primary">Request Access</a>
+    <a href="mailto:research@tanaw.app" class="btn-ghost">Research Inquiries</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Tanaw.</span>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Clinical Partners</a>
+    <a href="#">Contact</a>
+  </div>
+  <span class="footer-copy">&copy; 2025 Tanaw. All rights reserved.</span>
+</footer>
+
+<script>
+  // Animate keyboard demo
+  const keys = ['H','E','L','P'];
+  const outputEl = document.getElementById('kb-output');
+  const allKeys = document.querySelectorAll('.kb-key');
+
+  let demoText = '';
+  let keyIdx = 0;
+
+  setInterval(() => {
+    allKeys.forEach(k => k.classList.remove('active'));
+    const letter = keys[keyIdx % keys.length];
+    allKeys.forEach(k => {
+      if(k.textContent.trim() === letter) k.classList.add('active');
+    });
+    demoText += letter;
+    outputEl.textContent = demoText.length > 20 ? demoText.slice(-20) : demoText;
+    keyIdx++;
+    if(keyIdx >= keys.length * 3) {
+      keyIdx = 0;
+      demoText = '';
+    }
+  }, 1200);
+
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .audience-card, .step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
