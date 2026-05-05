@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --black: #0a0a0a;
       --white: #f5f4f0;
@@ -15,685 +14,154 @@
       --gray-200: #c8c7c3;
       --gray-400: #888785;
       --gray-700: #2a2a28;
-      --accent: #f5f4f0;
       --border: rgba(245,244,240,0.12);
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Manrope', sans-serif;
-      font-weight: 400;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    body { background: var(--black); color: var(--white); font-family: 'Manrope', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; }
 
     /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.4rem 4rem;
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      background: rgba(10,10,10,0.7);
-    }
-
-    .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      text-decoration: none;
-    }
-
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); background: rgba(10,10,10,0.7); }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--white); text-decoration: none; }
     .logo span { font-style: italic; color: var(--gray-400); }
-
-    nav ul {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    nav ul a {
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .logo-group { display: flex; flex-direction: column; gap: 0.05rem; }
+    .logo-byline { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-400); }
+    nav ul { display: flex; gap: 2.5rem; list-style: none; }
+    nav ul a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); text-decoration: none; transition: color 0.2s; }
     nav ul a:hover { color: var(--white); }
-
-    .nav-cta {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      color: var(--black) !important;
-      background: var(--white);
-      padding: 0.55rem 1.2rem;
-      border-radius: 2px;
-      text-decoration: none !important;
-      transition: background 0.2s, color 0.2s !important;
-    }
-
+    .nav-cta { font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; color: var(--black) !important; background: var(--white); padding: 0.55rem 1.2rem; border-radius: 2px; text-decoration: none !important; transition: background 0.2s, color 0.2s !important; }
     .nav-cta:hover { background: var(--gray-200) !important; }
 
+    /* LANG TOGGLE */
+    .lang-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+    .lang-btn { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.35rem 0.7rem; background: transparent; color: var(--gray-400); border: none; cursor: pointer; transition: background 0.15s, color 0.15s; }
+    .lang-btn.active { background: var(--white); color: var(--black); }
+
     /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding: 8rem 4rem 4rem;
-      gap: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 60vw;
-      height: 60vw;
-      border-radius: 50%;
-      border: 1px solid rgba(245,244,240,0.06);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 5%;
-      right: 5%;
-      width: 35vw;
-      height: 35vw;
-      border-radius: 50%;
-      border: 1px solid rgba(245,244,240,0.04);
-      pointer-events: none;
-    }
-
-    .hero-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      border: 1px solid var(--border);
-      display: inline-block;
-      padding: 0.4rem 0.9rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3rem, 5vw, 5.5rem);
-      line-height: 1.0;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-title em {
-      font-style: italic;
-      color: var(--gray-400);
-    }
-
-    .hero-desc {
-      font-size: 1.05rem;
-      color: var(--gray-200);
-      line-height: 1.75;
-      max-width: 440px;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.07em;
-      background: var(--white);
-      color: var(--black);
-      padding: 0.9rem 2rem;
-      border: none;
-      border-radius: 2px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s;
-      display: inline-block;
-    }
-
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 4rem 4rem; gap: 4rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw; border-radius: 50%; border: 1px solid rgba(245,244,240,0.06); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; top: 5%; right: 5%; width: 35vw; height: 35vw; border-radius: 50%; border: 1px solid rgba(245,244,240,0.04); pointer-events: none; }
+    .hero-tag { font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400); border: 1px solid var(--border); display: inline-block; padding: 0.4rem 0.9rem; margin-bottom: 2rem; }
+    .hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 5vw, 5.5rem); line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .hero-title em { font-style: italic; color: var(--gray-400); }
+    .hero-desc { font-size: 1.05rem; color: var(--gray-200); line-height: 1.75; max-width: 440px; margin-bottom: 2.5rem; font-weight: 300; }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.07em; background: var(--white); color: var(--black); padding: 0.9rem 2rem; border: none; border-radius: 2px; cursor: pointer; text-decoration: none; transition: background 0.2s; display: inline-block; }
     .btn-primary:hover { background: var(--gray-200); }
-
-    .btn-ghost {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.07em;
-      color: var(--gray-400);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color 0.2s;
-    }
-
+    .btn-ghost { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.07em; color: var(--gray-400); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
     .btn-ghost:hover { color: var(--white); }
     .btn-ghost::after { content: '→'; }
 
     /* HERO VISUAL */
-    .hero-visual {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .eye-ring {
-      width: min(420px, 38vw);
-      height: min(420px, 38vw);
-      border-radius: 50%;
-      border: 1px solid rgba(245,244,240,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .eye-ring::before {
-      content: '';
-      position: absolute;
-      inset: 16px;
-      border-radius: 50%;
-      border: 1px solid rgba(245,244,240,0.08);
-    }
-
-    .eye-ring::after {
-      content: '';
-      position: absolute;
-      inset: 36px;
-      border-radius: 50%;
-      border: 1px solid rgba(245,244,240,0.05);
-    }
-
-    .eye-core {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .eye-pupil {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: var(--black);
-      position: relative;
-    }
-
-    .eye-pupil::after {
-      content: '';
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--white);
-    }
-
-    .scan-line {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: min(420px, 38vw);
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(245,244,240,0.3), transparent);
-      transform: translate(-50%, -50%);
-      animation: scan 3s ease-in-out infinite;
-    }
-
-    @keyframes scan {
-      0%, 100% { transform: translate(-50%, -50%) scaleX(0.3); opacity: 0; }
-      50% { transform: translate(-50%, -50%) scaleX(1); opacity: 1; }
-    }
-
-    .floating-key {
-      position: absolute;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--gray-400);
-      border: 1px solid var(--border);
-      padding: 0.3rem 0.6rem;
-      border-radius: 2px;
-      background: rgba(10,10,10,0.6);
-      animation: float 4s ease-in-out infinite;
-    }
-
+    .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; }
+    .eye-ring { width: min(420px, 38vw); height: min(420px, 38vw); border-radius: 50%; border: 1px solid rgba(245,244,240,0.15); display: flex; align-items: center; justify-content: center; position: relative; }
+    .eye-ring::before { content: ''; position: absolute; inset: 16px; border-radius: 50%; border: 1px solid rgba(245,244,240,0.08); }
+    .eye-ring::after { content: ''; position: absolute; inset: 36px; border-radius: 50%; border: 1px solid rgba(245,244,240,0.05); }
+    .eye-core { width: 140px; height: 140px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+    .eye-pupil { width: 60px; height: 60px; border-radius: 50%; background: var(--black); position: relative; }
+    .eye-pupil::after { content: ''; position: absolute; top: 12px; left: 12px; width: 14px; height: 14px; border-radius: 50%; background: var(--white); }
+    .scan-line { position: absolute; top: 50%; left: 50%; width: min(420px, 38vw); height: 1px; background: linear-gradient(90deg, transparent, rgba(245,244,240,0.3), transparent); transform: translate(-50%, -50%); animation: scan 3s ease-in-out infinite; }
+    @keyframes scan { 0%, 100% { transform: translate(-50%, -50%) scaleX(0.3); opacity: 0; } 50% { transform: translate(-50%, -50%) scaleX(1); opacity: 1; } }
+    .floating-key { position: absolute; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--gray-400); border: 1px solid var(--border); padding: 0.3rem 0.6rem; border-radius: 2px; background: rgba(10,10,10,0.6); animation: float 4s ease-in-out infinite; }
     .fk1 { top: 10%; left: 5%; animation-delay: 0s; }
     .fk2 { top: 20%; right: 5%; animation-delay: 0.8s; }
     .fk3 { bottom: 20%; left: 0%; animation-delay: 1.6s; }
     .fk4 { bottom: 10%; right: 8%; animation-delay: 2.4s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); opacity: 0.4; }
-      50% { transform: translateY(-8px); opacity: 0.9; }
-    }
+    @keyframes float { 0%, 100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-8px); opacity: 0.9; } }
 
     /* STATS BAR */
-    .stats-bar {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 2rem 4rem;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
+    .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.8rem; letter-spacing: -0.04em; line-height: 1; }
+    .stat-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); }
 
-    .stat {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .stat-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.8rem;
-      letter-spacing: -0.04em;
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-    }
+    /* SECTIONS */
+    section { padding: 7rem 4rem; }
+    .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 1rem; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 3.5vw, 3.5rem); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .section-title em { font-style: italic; color: var(--gray-400); }
 
     /* HOW IT WORKS */
-    section {
-      padding: 7rem 4rem;
-    }
-
-    .section-eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 3.5vw, 3.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-    }
-
-    .section-title em {
-      font-style: italic;
-      color: var(--gray-400);
-    }
-
-    /* HOW IT WORKS */
-    .hiw-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      margin-top: 5rem;
-      align-items: start;
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: 3rem 1fr;
-      gap: 1.5rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
+    .hiw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 5rem; align-items: start; }
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step { display: grid; grid-template-columns: 3rem 1fr; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
     .step:first-child { border-top: 1px solid var(--border); }
+    .step-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--gray-400); padding-top: 0.2rem; }
+    .step-content h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .step-content p { font-size: 0.9rem; color: var(--gray-200); line-height: 1.7; font-weight: 300; }
 
-    .step-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--gray-400);
-      padding-top: 0.2rem;
-    }
-
-    .step-content h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-
-    .step-content p {
-      font-size: 0.9rem;
-      color: var(--gray-200);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    /* KEYBOARD VIZ */
-    .keyboard-demo {
-      background: var(--gray-700);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1.5rem;
-      position: sticky;
-      top: 8rem;
-    }
-
-    .kb-row {
-      display: flex;
-      gap: 0.4rem;
-      margin-bottom: 0.4rem;
-      justify-content: center;
-    }
-
-    .kb-key {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 500;
-      background: rgba(245,244,240,0.06);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 0.5rem 0.65rem;
-      min-width: 36px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.15s;
-      color: var(--gray-200);
-    }
-
-    .kb-key.active {
-      background: var(--white);
-      color: var(--black);
-      border-color: var(--white);
-    }
-
-    .kb-key.space { flex: 1; }
-
-    .kb-output {
-      margin-top: 1rem;
-      padding: 0.8rem 1rem;
-      background: rgba(245,244,240,0.04);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--gray-200);
-      min-height: 2.5rem;
-      line-height: 1.6;
-    }
-
-    .kb-gaze-indicator {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.8rem;
-    }
-
-    .gaze-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--white);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.3; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1); }
-    }
-
-    .gaze-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-    }
+    /* KEYBOARD DEMO — matches actual Tanaw UI */
+    .tanaw-kb { background: #1a1a1a; border: 1px solid #333; border-radius: 4px; overflow: hidden; position: sticky; top: 8rem; font-family: 'Manrope', sans-serif; }
+    .tanaw-output-bar { background: #2a2a2a; padding: 0.55rem 0.8rem 0.55rem 0.6rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #333; min-height: 42px; }
+    .tanaw-output-text { font-size: 0.85rem; color: #f5f4f0; flex: 1; letter-spacing: 0.01em; }
+    .tanaw-cursor { display: inline-block; width: 2px; height: 1em; background: #e55; margin-left: 1px; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .panic-btn { background: #cc1111; color: #fff; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.4rem 0.6rem; border-radius: 2px; line-height: 1.2; text-align: center; white-space: nowrap; }
+    .tanaw-suggestions { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #333; }
+    .tanaw-sug { background: #2e2e2e; color: #f5f4f0; font-size: 0.85rem; font-weight: 600; text-align: center; padding: 0.75rem 0.3rem; border-right: 1px solid #333; cursor: pointer; transition: background 0.15s; }
+    .tanaw-sug:last-child { border-right: none; }
+    .tanaw-sug.active-sug { background: #3a3a3a; }
+    .tanaw-special-row { display: grid; grid-template-columns: 52px 52px 1fr 140px 52px; border-bottom: 1px solid #333; }
+    .tanaw-spec-key { background: #252525; color: #f5f4f0; font-size: 1rem; display: flex; align-items: center; justify-content: center; padding: 0.8rem 0; border-right: 1px solid #333; cursor: pointer; transition: background 0.15s; }
+    .tanaw-spec-key:last-child { border-right: none; }
+    .tanaw-spec-key.active { background: #fff; color: #000; }
+    .tanaw-spec-key.space-key { font-size: 1.1rem; letter-spacing: 0.05em; color: #888; }
+    .tanaw-spec-key.predef { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; line-height: 1.3; color: #aaa; }
+    .tanaw-spec-key.tts { font-size: 1.1rem; }
+    .tanaw-key-rows { padding: 0; }
+    .tanaw-row { display: grid; border-bottom: 1px solid #2a2a2a; }
+    .tanaw-row.row-q { grid-template-columns: repeat(10, 1fr); }
+    .tanaw-row.row-a { grid-template-columns: repeat(10, 1fr); }
+    .tanaw-row.row-z { grid-template-columns: repeat(10, 1fr); }
+    .tanaw-key { background: #252525; color: #f5f4f0; font-size: 1rem; font-weight: 600; text-align: center; padding: 0.85rem 0; border-right: 1px solid #2a2a2a; cursor: pointer; transition: background 0.12s; letter-spacing: 0.01em; }
+    .tanaw-key:last-child { border-right: none; }
+    .tanaw-key.active { background: #fff; color: #000; }
+    .tanaw-key.bksp { font-size: 0.8rem; color: #aaa; }
+    .tanaw-key.clear-all { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #aaa; grid-column: span 3; }
+    .tanaw-status { background: #111; padding: 0.3rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 0.6rem; color: #555; letter-spacing: 0.05em; }
+    .gaze-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--white); animation: pulse 2s ease-in-out infinite; margin-right: 4px; vertical-align: middle; }
+    @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
+    .gaze-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); }
+    .kb-gaze-indicator { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; }
 
     /* FEATURES */
     .features-section { background: var(--gray-700); }
+    .features-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 4rem; }
+    .features-desc { font-size: 1rem; color: var(--gray-200); line-height: 1.75; font-weight: 300; align-self: end; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+    .feature-card { background: var(--gray-700); padding: 2.5rem 2rem; }
+    .feature-icon { width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+    .feature-icon svg { width: 20px; height: 20px; stroke: var(--white); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+    .feature-card p { font-size: 0.875rem; color: var(--gray-400); line-height: 1.7; font-weight: 300; }
 
-    .features-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: end;
-      margin-bottom: 4rem;
-    }
-
-    .features-desc {
-      font-size: 1rem;
-      color: var(--gray-200);
-      line-height: 1.75;
-      font-weight: 300;
-      align-self: end;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .feature-card {
-      background: var(--gray-700);
-      padding: 2.5rem 2rem;
-    }
-
-    .feature-icon {
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .feature-icon svg {
-      width: 20px;
-      height: 20px;
-      stroke: var(--white);
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .feature-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.01em;
-    }
-
-    .feature-card p {
-      font-size: 0.875rem;
-      color: var(--gray-400);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    /* WHO IS IT FOR */
-    .audience-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      margin-top: 4rem;
-    }
-
-    .audience-card {
-      border: 1px solid var(--border);
-      padding: 2rem;
-      border-radius: 2px;
-      transition: border-color 0.2s;
-    }
-
+    /* AUDIENCE */
+    .audience-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 4rem; }
+    .audience-card { border: 1px solid var(--border); padding: 2rem; border-radius: 2px; transition: border-color 0.2s; }
     .audience-card:hover { border-color: rgba(245,244,240,0.3); }
-
-    .audience-card h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.01em;
-    }
-
-    .audience-card p {
-      font-size: 0.875rem;
-      color: var(--gray-400);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    .audience-tag {
-      display: inline-block;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      border: 1px solid var(--border);
-      padding: 0.25rem 0.6rem;
-      margin-bottom: 1rem;
-    }
+    .audience-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+    .audience-card p { font-size: 0.875rem; color: var(--gray-400); line-height: 1.7; font-weight: 300; }
+    .audience-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); border: 1px solid var(--border); padding: 0.25rem 0.6rem; margin-bottom: 1rem; }
 
     /* CTA */
-    .cta-section {
-      text-align: center;
-      border-top: 1px solid var(--border);
-      padding: 8rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70vw;
-      height: 70vw;
-      border-radius: 50%;
-      border: 1px solid rgba(245,244,240,0.05);
-      pointer-events: none;
-    }
-
-    .cta-word {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3rem, 6vw, 7rem);
-      line-height: 1.0;
-      letter-spacing: -0.04em;
-      display: block;
-    }
-
-    .cta-word em {
-      font-style: italic;
-      color: var(--gray-400);
-    }
-
-    .cta-sub {
-      font-size: 1rem;
-      color: var(--gray-400);
-      margin: 2rem auto;
-      max-width: 480px;
-      font-weight: 300;
-    }
-
-    .cta-actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+    .cta-section { text-align: center; border-top: 1px solid var(--border); padding: 8rem 4rem; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; bottom: -30%; left: 50%; transform: translateX(-50%); width: 70vw; height: 70vw; border-radius: 50%; border: 1px solid rgba(245,244,240,0.05); pointer-events: none; }
+    .cta-word { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 6vw, 7rem); line-height: 1.0; letter-spacing: -0.04em; display: block; }
+    .cta-word em { font-style: italic; color: var(--gray-400); }
+    .cta-sub { font-size: 1rem; color: var(--gray-400); margin: 2rem auto; max-width: 480px; font-weight: 300; }
+    .cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
     /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: var(--gray-400);
-    }
-
-    .footer-copy {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      color: var(--gray-400);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .footer-links a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    footer { border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--gray-400); }
+    .footer-group { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-top: 0.2rem; }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.05em; color: var(--gray-400); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-400); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--white); }
 
     /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-left > * {
-      animation: fadeUp 0.7s ease both;
-    }
-
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-left > * { animation: fadeUp 0.7s ease both; }
     .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
     .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
     .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
@@ -714,35 +182,49 @@
       .cta-section { padding: 5rem 1.5rem; }
       footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
     }
+
+    /* LANG HIDDEN */
+    [data-lang] { display: none; }
+    [data-lang].visible { display: inline; }
+    span[data-lang].visible { display: inline; }
+    p[data-lang].visible { display: block; }
+    h1[data-lang].visible, h2[data-lang].visible, h3[data-lang].visible { display: block; }
+    div[data-lang].visible { display: block; }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo">Tanaw<span>.</span></a>
+  <div class="logo-group">
+    <a href="#" class="logo">Tanaw<span>.</span></a>
+    <span class="logo-byline">by SeenByEveryone</span>
+  </div>
   <ul>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#for">Who It's For</a></li>
-    <li><a href="#contact" class="nav-cta">Get Access</a></li>
+    <li><a href="#how" data-en="How It Works" data-fil="Paano Gumagana">How It Works</a></li>
+    <li><a href="#features" data-en="Features" data-fil="Mga Tampok">Features</a></li>
+    <li><a href="#for" data-en="Who It's For" data-fil="Para Kanino">Who It's For</a></li>
+    <li><a href="#contact" class="nav-cta" data-en="Get Access" data-fil="Makakuha">Get Access</a></li>
   </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('fil')">FIL</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" style="padding-top: 8rem;">
   <div class="hero-left">
-    <div class="hero-tag">Assistive Communication Technology</div>
+    <div class="hero-tag" id="hero-tag">Assistive Communication Technology</div>
     <h1 class="hero-title">
-      See it.<br>
-      <em>Type it.</em>
+      <span data-en="See it.<br><em>Type it.</em>" data-fil="Titigan.<br><em>I-type.</em>">See it.<br><em>Type it.</em></span>
     </h1>
-    <p class="hero-desc">
-      Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — powered entirely by eye movement.
+    <p class="hero-desc" id="hero-desc">
+      Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — operated through eye movement, with easy caregiver setup.
     </p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Request Early Access</a>
-      <a href="#how" class="btn-ghost">See how it works</a>
+      <a href="#contact" class="btn-primary" id="btn-access">Request Early Access</a>
+      <a href="#how" class="btn-ghost" id="btn-how">See how it works</a>
     </div>
   </div>
   <div class="hero-visual">
@@ -762,75 +244,94 @@
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stat">
-    <span class="stat-num">100%</span>
-    <span class="stat-label">Hands-Free Operation</span>
+    <span class="stat-num">Gaze</span>
+    <span class="stat-label" id="stat1-label">Patient-Operated via Eye Movement</span>
   </div>
   <div class="stat">
-    <span class="stat-num">< 1s</span>
-    <span class="stat-label">Key Selection Latency</span>
+    <span class="stat-num">&lt; 1s</span>
+    <span class="stat-label" id="stat2-label">Key Selection Latency</span>
   </div>
   <div class="stat">
     <span class="stat-num">2</span>
-    <span class="stat-label">Languages Supported</span>
+    <span class="stat-label" id="stat3-label">Languages — English & Filipino</span>
   </div>
 </div>
 
 <!-- HOW IT WORKS -->
 <section id="how">
-  <div class="section-eyebrow">The Process</div>
-  <h2 class="section-title">Your eyes are<br><em>the keyboard.</em></h2>
+  <div class="section-eyebrow" id="hiw-eyebrow">The Process</div>
+  <h2 class="section-title" id="hiw-title">Your eyes are<br><em>the keyboard.</em></h2>
   <div class="hiw-grid">
     <div class="steps">
       <div class="step">
         <span class="step-num">01</span>
         <div class="step-content">
-          <h3>Camera Tracks Your Gaze</h3>
-          <p>A standard front-facing camera — or an external eye-tracking device — reads your eye position in real time with precision calibration.</p>
+          <h3 id="step1-title">Caregiver Sets Up the Device</h3>
+          <p id="step1-desc">A caregiver or clinician installs Tanaw and calibrates the camera to the patient's eye position. Setup takes only a few minutes and is done once.</p>
         </div>
       </div>
       <div class="step">
         <span class="step-num">02</span>
         <div class="step-content">
-          <h3>Gaze Lands on a Key</h3>
-          <p>The on-screen keyboard highlights the key your eyes are fixed on. A short dwell time (customizable) confirms the selection — no click needed.</p>
+          <h3 id="step2-title">Camera Tracks the Patient's Gaze</h3>
+          <p id="step2-desc">A standard front-facing camera reads the patient's eye position in real time. The patient then operates everything independently through gaze alone.</p>
         </div>
       </div>
       <div class="step">
         <span class="step-num">03</span>
         <div class="step-content">
-          <h3>Words Are Built in Real Time</h3>
-          <p>Predictive text and phrase suggestions reduce effort — users type full sentences using minimal eye movements.</p>
+          <h3 id="step3-title">Words Are Suggested Instantly</h3>
+          <p id="step3-desc">An n-gram language model predicts word completions and next-word suggestions based on what's been typed — reducing the number of eye movements needed.</p>
         </div>
       </div>
       <div class="step">
         <span class="step-num">04</span>
         <div class="step-content">
-          <h3>Speech Output (Optional)</h3>
-          <p>Tanaw can read composed text aloud via text-to-speech, enabling verbal communication in social or clinical settings.</p>
+          <h3 id="step4-title">Speech Output (Optional)</h3>
+          <p id="step4-desc">Tanaw can read composed text aloud via text-to-speech, enabling verbal communication in social or clinical settings.</p>
         </div>
       </div>
     </div>
     <div>
-      <div class="keyboard-demo">
-        <div class="kb-gaze-indicator">
-          <div class="gaze-dot"></div>
-          <span class="gaze-label">Gaze Active</span>
+      <!-- Tanaw UI replica -->
+      <div class="tanaw-kb">
+        <!-- Output bar -->
+        <div class="tanaw-output-bar">
+          <span class="tanaw-output-text" id="kb-output"><span class="tanaw-cursor"></span></span>
+          <div class="panic-btn">PANIC<br>BUTTON</div>
         </div>
-        <div style="margin-top: 1.2rem;">
-          <div class="kb-row">
-            <div class="kb-key">Q</div><div class="kb-key">W</div><div class="kb-key">E</div><div class="kb-key">R</div><div class="kb-key">T</div><div class="kb-key active" id="ykey">Y</div><div class="kb-key">U</div><div class="kb-key">I</div><div class="kb-key">O</div><div class="kb-key">P</div>
+        <!-- N-gram suggestions row -->
+        <div class="tanaw-suggestions">
+          <div class="tanaw-sug" id="sug1">i</div>
+          <div class="tanaw-sug" id="sug2">ka</div>
+          <div class="tanaw-sug" id="sug3">you</div>
+          <div class="tanaw-sug" id="sug4">ngayon</div>
+        </div>
+        <!-- Special row: ◄ ► SPACE Predefined 🔊 -->
+        <div class="tanaw-special-row">
+          <div class="tanaw-spec-key" id="key-left">&#9664;</div>
+          <div class="tanaw-spec-key" id="key-right">&#9654;</div>
+          <div class="tanaw-spec-key space-key" id="key-space">&#9251;</div>
+          <div class="tanaw-spec-key predef">Predefined<br>Sentence</div>
+          <div class="tanaw-spec-key tts">&#128266;</div>
+        </div>
+        <!-- Letter rows -->
+        <div class="tanaw-key-rows">
+          <div class="tanaw-row row-q">
+            <div class="tanaw-key" id="kQ">Q</div><div class="tanaw-key" id="kW">W</div><div class="tanaw-key" id="kE">E</div><div class="tanaw-key" id="kR">R</div><div class="tanaw-key" id="kT">T</div><div class="tanaw-key" id="kY">Y</div><div class="tanaw-key" id="kU">U</div><div class="tanaw-key" id="kI">I</div><div class="tanaw-key" id="kO">O</div><div class="tanaw-key" id="kP">P</div>
           </div>
-          <div class="kb-row">
-            <div class="kb-key">A</div><div class="kb-key">S</div><div class="kb-key">D</div><div class="kb-key">F</div><div class="kb-key">G</div><div class="kb-key">H</div><div class="kb-key">J</div><div class="kb-key">K</div><div class="kb-key">L</div>
+          <div class="tanaw-row row-a">
+            <div class="tanaw-key" id="kA">A</div><div class="tanaw-key" id="kS">S</div><div class="tanaw-key" id="kD">D</div><div class="tanaw-key" id="kF">F</div><div class="tanaw-key" id="kG">G</div><div class="tanaw-key" id="kH">H</div><div class="tanaw-key" id="kJ">J</div><div class="tanaw-key" id="kK">K</div><div class="tanaw-key" id="kL">L</div><div class="tanaw-key bksp" id="kBksp">&#9003;</div>
           </div>
-          <div class="kb-row">
-            <div class="kb-key">Z</div><div class="kb-key">X</div><div class="kb-key">C</div><div class="kb-key">V</div><div class="kb-key">B</div><div class="kb-key">N</div><div class="kb-key">M</div>
-          </div>
-          <div class="kb-row">
-            <div class="kb-key space">SPACE</div><div class="kb-key">⌫</div>
+          <div class="tanaw-row row-z">
+            <div class="tanaw-key" id="kZ">Z</div><div class="tanaw-key" id="kX">X</div><div class="tanaw-key" id="kC">C</div><div class="tanaw-key" id="kV">V</div><div class="tanaw-key" id="kB">B</div><div class="tanaw-key" id="kN">N</div><div class="tanaw-key" id="kM">M</div><div class="tanaw-key clear-all" id="kClear">Clear all</div>
           </div>
         </div>
-        <div class="kb-output" id="kb-output">I need help</div>
+        <!-- Status bar -->
+        <div class="tanaw-status">
+          <span class="gaze-dot"></span>
+          <span id="ngram-label">Gaze-based keyboard ready &nbsp;|&nbsp; S = Settings (caretaker)</span>
+        </div>
       </div>
     </div>
   </div>
@@ -840,11 +341,11 @@
 <section id="features" class="features-section">
   <div class="features-header">
     <div>
-      <div class="section-eyebrow">Capabilities</div>
-      <h2 class="section-title">Built for<br><em>real needs.</em></h2>
+      <div class="section-eyebrow" id="feat-eyebrow">Capabilities</div>
+      <h2 class="section-title" id="feat-title">Built for<br><em>real needs.</em></h2>
     </div>
-    <p class="features-desc">
-      Tanaw is designed in close collaboration with clinicians and occupational therapists to ensure it meets the nuanced needs of patients with ALS, cerebral palsy, spinal cord injuries, locked-in syndrome, and more.
+    <p class="features-desc" id="feat-desc">
+      Tanaw is designed with clinicians and occupational therapists to meet the nuanced needs of patients with ALS, cerebral palsy, spinal cord injuries, locked-in syndrome, and more.
     </p>
   </div>
   <div class="features-grid">
@@ -852,128 +353,275 @@
       <div class="feature-icon">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/></svg>
       </div>
-      <h3>Precision Eye Tracking</h3>
-      <p>Works with standard webcams and dedicated eye-tracking hardware. Sub-degree accuracy ensures confident key selection.</p>
+      <h3 id="f1-title">Precision Eye Tracking</h3>
+      <p id="f1-desc">Works with standard webcams and dedicated eye-tracking hardware. Sub-degree gaze accuracy ensures confident key selection without physical input.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
       </div>
-      <h3>Smart Word Prediction</h3>
-      <p>AI-powered suggestions learn your communication patterns to reduce keystrokes and speed up expression over time.</p>
+      <h3 id="f2-title">N-gram Word Prediction</h3>
+      <p id="f2-desc">A lightweight n-gram language model predicts word completions and next-word suggestions — reducing eye movement effort without requiring internet or heavy computation.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
-      <h3>Custom Phrase Banks</h3>
-      <p>Caregivers and clinicians can pre-load common phrases for fast access — ideal for urgent needs or daily routines.</p>
+      <h3 id="f3-title">Custom Phrase Banks</h3>
+      <p id="f3-desc">Caregivers and clinicians can pre-load common phrases for fast access — ideal for urgent needs or daily routines.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 013 3v7a3 3 0 01-6 0V5a3 3 0 013-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v3M8 22h8"/></svg>
       </div>
-      <h3>Text-to-Speech Output</h3>
-      <p>High-quality voice synthesis reads composed messages aloud in real time — multiple voice options and languages.</p>
+      <h3 id="f4-title">Text-to-Speech Output</h3>
+      <p id="f4-desc">High-quality voice synthesis reads composed messages aloud — supporting both English and Filipino for real-life communication.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       </div>
-      <h3>Adjustable Interface</h3>
-      <p>Key size, dwell time, color contrast, and layout can all be tuned by a clinician to match each patient's capability.</p>
+      <h3 id="f5-title">Caregiver-Friendly Setup</h3>
+      <p id="f5-desc">Initial calibration is handled by a caregiver or clinician. Once set up, the patient operates the full system independently through gaze alone.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
-      <h3>Privacy-First Design</h3>
-      <p>All processing happens on-device. No sensitive health or communication data is sent to external servers.</p>
+      <h3 id="f6-title">Privacy-First Design</h3>
+      <p id="f6-desc">All processing happens on-device. No sensitive health or communication data is sent to external servers.</p>
     </div>
   </div>
 </section>
 
 <!-- WHO IT'S FOR -->
 <section id="for">
-  <div class="section-eyebrow">Patients & Caregivers</div>
-  <h2 class="section-title">Who Tanaw<br><em>helps.</em></h2>
+  <div class="section-eyebrow" id="for-eyebrow">Patients & Caregivers</div>
+  <h2 class="section-title" id="for-title">Who Tanaw<br><em>helps.</em></h2>
   <div class="audience-grid">
     <div class="audience-card">
-      <div class="audience-tag">Neurological</div>
-      <h3>ALS & Motor Neuron Disease</h3>
-      <p>As voluntary muscle control declines, Tanaw preserves the ability to communicate — giving patients independence for as long as possible.</p>
+      <div class="audience-tag" id="aud1-tag">Neurological</div>
+      <h3 id="aud1-title">ALS & Motor Neuron Disease</h3>
+      <p id="aud1-desc">As voluntary muscle control declines, Tanaw preserves the ability to communicate — giving patients independence for as long as possible.</p>
     </div>
     <div class="audience-card">
-      <div class="audience-tag">Developmental</div>
-      <h3>Cerebral Palsy</h3>
-      <p>Individuals with limited limb control can use gaze to compose messages, make choices, and engage in education and social life.</p>
+      <div class="audience-tag" id="aud2-tag">Developmental</div>
+      <h3 id="aud2-title">Cerebral Palsy</h3>
+      <p id="aud2-desc">Individuals with limited limb control can use gaze to compose messages, make choices, and engage in education and social life.</p>
     </div>
     <div class="audience-card">
-      <div class="audience-tag">Acquired Injury</div>
-      <h3>Spinal Cord Injury</h3>
-      <p>Patients with high-level cervical injuries retain full cognitive function but lack motor ability — Tanaw gives them a voice without physical effort.</p>
+      <div class="audience-tag" id="aud3-tag">Acquired Injury</div>
+      <h3 id="aud3-title">Spinal Cord Injury</h3>
+      <p id="aud3-desc">Patients with high-level cervical injuries retain full cognitive function but lack motor ability — Tanaw gives them a voice without physical effort.</p>
     </div>
     <div class="audience-card">
-      <div class="audience-tag">Intensive Care</div>
-      <h3>Locked-In Syndrome</h3>
-      <p>For patients with complete or near-complete paralysis, Tanaw may be the primary or only means of expressive communication.</p>
+      <div class="audience-tag" id="aud4-tag">Intensive Care</div>
+      <h3 id="aud4-title">Locked-In Syndrome</h3>
+      <p id="aud4-desc">For patients with complete or near-complete paralysis, Tanaw may be the primary or only means of expressive communication.</p>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section" id="contact">
-  <span class="cta-word">Every<br>patient</span>
-  <span class="cta-word"><em>deserves a voice.</em></span>
-  <p class="cta-sub">Tanaw is currently in clinical pilot. Request access for your facility, research project, or loved one.</p>
+  <span class="cta-word" id="cta-line1">Every<br>patient</span>
+  <span class="cta-word"><em id="cta-line2">deserves a voice.</em></span>
+  <p class="cta-sub" id="cta-sub">Tanaw is currently in development. Request access for your facility, research project, or loved one.</p>
   <div class="cta-actions">
-    <a href="mailto:hello@tanaw.app" class="btn-primary">Request Access</a>
-    <a href="mailto:research@tanaw.app" class="btn-ghost">Research Inquiries</a>
+    <a href="mailto:hello@tanaw.app" class="btn-primary" id="cta-btn1">Request Access</a>
+    <a href="mailto:research@tanaw.app" class="btn-ghost" id="cta-btn2">Research Inquiries</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <span class="footer-logo">Tanaw.</span>
-  <div class="footer-links">
-    <a href="#">Privacy</a>
-    <a href="#">Clinical Partners</a>
-    <a href="#">Contact</a>
+  <div>
+    <div class="footer-logo">Tanaw.</div>
+    <div class="footer-group">SeenByEveryone &copy; 2025</div>
   </div>
-  <span class="footer-copy">&copy; 2025 Tanaw. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="#" id="fl1">Privacy</a>
+    <a href="#" id="fl2">Clinical Partners</a>
+    <a href="#" id="fl3">Contact</a>
+  </div>
+  <span class="footer-copy" id="footer-copy">All rights reserved.</span>
 </footer>
 
 <script>
-  // Animate keyboard demo
-  const keys = ['H','E','L','P'];
-  const outputEl = document.getElementById('kb-output');
-  const allKeys = document.querySelectorAll('.kb-key');
-
-  let demoText = '';
-  let keyIdx = 0;
-
-  setInterval(() => {
-    allKeys.forEach(k => k.classList.remove('active'));
-    const letter = keys[keyIdx % keys.length];
-    allKeys.forEach(k => {
-      if(k.textContent.trim() === letter) k.classList.add('active');
-    });
-    demoText += letter;
-    outputEl.textContent = demoText.length > 20 ? demoText.slice(-20) : demoText;
-    keyIdx++;
-    if(keyIdx >= keys.length * 3) {
-      keyIdx = 0;
-      demoText = '';
+  // ---- LANGUAGE DATA ----
+  const strings = {
+    en: {
+      'hero-tag': 'Assistive Communication Technology',
+      'hero-desc': 'Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — operated through eye movement, with easy caregiver setup.',
+      'btn-access': 'Request Early Access',
+      'btn-how': 'See how it works',
+      'stat1-label': 'Patient-Operated via Eye Movement',
+      'stat2-label': 'Key Selection Latency',
+      'stat3-label': 'Languages — English & Filipino',
+      'hiw-eyebrow': 'The Process',
+      'hiw-title': 'Your eyes are<br><em>the keyboard.</em>',
+      'step1-title': 'Caregiver Sets Up the Device',
+      'step1-desc': 'A caregiver or clinician installs Tanaw and calibrates the camera to the patient\'s eye position. Setup takes only a few minutes and is done once.',
+      'step2-title': 'Camera Tracks the Patient\'s Gaze',
+      'step2-desc': 'A standard front-facing camera reads the patient\'s eye position in real time. The patient then operates everything independently through gaze alone.',
+      'step3-title': 'Words Are Suggested Instantly',
+      'step3-desc': 'An n-gram language model predicts word completions and next-word suggestions based on what\'s been typed — reducing the number of eye movements needed.',
+      'step4-title': 'Speech Output (Optional)',
+      'step4-desc': 'Tanaw can read composed text aloud via text-to-speech, enabling verbal communication in social or clinical settings.',
+      'gaze-label': 'Gaze Active',
+      'ngram-label': 'n-gram suggestions active',
+      'feat-eyebrow': 'Capabilities',
+      'feat-title': 'Built for<br><em>real needs.</em>',
+      'feat-desc': 'Tanaw is designed with clinicians and occupational therapists to meet the nuanced needs of patients with ALS, cerebral palsy, spinal cord injuries, locked-in syndrome, and more.',
+      'f1-title': 'Precision Eye Tracking',
+      'f1-desc': 'Works with standard webcams and dedicated eye-tracking hardware. Sub-degree gaze accuracy ensures confident key selection without physical input.',
+      'f2-title': 'N-gram Word Prediction',
+      'f2-desc': 'A lightweight n-gram language model predicts word completions and next-word suggestions — reducing eye movement effort without requiring internet or heavy computation.',
+      'f3-title': 'Custom Phrase Banks',
+      'f3-desc': 'Caregivers and clinicians can pre-load common phrases for fast access — ideal for urgent needs or daily routines.',
+      'f4-title': 'Text-to-Speech Output',
+      'f4-desc': 'High-quality voice synthesis reads composed messages aloud — supporting both English and Filipino for real-life communication.',
+      'f5-title': 'Caregiver-Friendly Setup',
+      'f5-desc': 'Initial calibration is handled by a caregiver or clinician. Once set up, the patient operates the full system independently through gaze alone.',
+      'f6-title': 'Privacy-First Design',
+      'f6-desc': 'All processing happens on-device. No sensitive health or communication data is sent to external servers.',
+      'for-eyebrow': 'Patients & Caregivers',
+      'for-title': 'Who Tanaw<br><em>helps.</em>',
+      'aud1-tag': 'Neurological', 'aud1-title': 'ALS & Motor Neuron Disease', 'aud1-desc': 'As voluntary muscle control declines, Tanaw preserves the ability to communicate — giving patients independence for as long as possible.',
+      'aud2-tag': 'Developmental', 'aud2-title': 'Cerebral Palsy', 'aud2-desc': 'Individuals with limited limb control can use gaze to compose messages, make choices, and engage in education and social life.',
+      'aud3-tag': 'Acquired Injury', 'aud3-title': 'Spinal Cord Injury', 'aud3-desc': 'Patients with high-level cervical injuries retain full cognitive function but lack motor ability — Tanaw gives them a voice without physical effort.',
+      'aud4-tag': 'Intensive Care', 'aud4-title': 'Locked-In Syndrome', 'aud4-desc': 'For patients with complete or near-complete paralysis, Tanaw may be the primary or only means of expressive communication.',
+      'cta-line1': 'Every<br>patient',
+      'cta-line2': 'deserves a voice.',
+      'cta-sub': 'Tanaw is currently in development. Request access for your facility, research project, or loved one.',
+      'cta-btn1': 'Request Access', 'cta-btn2': 'Research Inquiries',
+      'fl1': 'Privacy', 'fl2': 'Clinical Partners', 'fl3': 'Contact',
+      'footer-copy': 'All rights reserved.'
+    },
+    fil: {
+      'hero-tag': 'Teknolohiya para sa Komunikasyon',
+      'hero-desc': 'Ang Tanaw ay isang digital na keyboard na gumagamit ng tingin upang tulungan ang mga pasyenteng may kapansanan sa paggalaw at pananalita na mabawi ang kanilang kakayahang makipag-usap — pinapatakbo ng mata, na ini-set up ng tagapag-alaga.',
+      'btn-access': 'Humiling ng Access',
+      'btn-how': 'Tingnan kung paano',
+      'stat1-label': 'Pinapatakbo ng Pasyente sa pamamagitan ng Mata',
+      'stat2-label': 'Bilis ng Pagpili ng Key',
+      'stat3-label': 'Mga Wika — Ingles at Filipino',
+      'hiw-eyebrow': 'Ang Proseso',
+      'hiw-title': 'Ang iyong mga mata<br><em>ang keyboard.</em>',
+      'step1-title': 'Ini-set up ng Tagapag-alaga ang Device',
+      'step1-desc': 'Ini-install ng tagapag-alaga o klinikano ang Tanaw at ini-calibrate ang camera sa posisyon ng mata ng pasyente. Ilang minuto lang ang setup at isang beses lang gawin.',
+      'step2-title': 'Sinusubaybayan ng Camera ang Tingin ng Pasyente',
+      'step2-desc': 'Isang karaniwang camera ang nagbabasa ng posisyon ng mata ng pasyente nang real time. Mula doon, pinapatakbo ng pasyente ang lahat gamit ang tingin.',
+      'step3-title': 'Agad na Iminumungkahi ang mga Salita',
+      'step3-desc': 'Gumagamit ang Tanaw ng n-gram na modelo ng wika upang hulaan ang pagkumpleto ng salita at mungkahi ng susunod na salita — binabawasan ang bilang ng kilos ng mata.',
+      'step4-title': 'Output sa Pagsasalita (Opsyonal)',
+      'step4-desc': 'Maaaring basahin ng Tanaw ang naisulat nang malakas sa pamamagitan ng text-to-speech, na nagbibigay-daan sa verbal na komunikasyon.',
+      'gaze-label': 'Aktibo ang Tingin',
+      'ngram-label': 'aktibo ang n-gram na mungkahi',
+      'feat-eyebrow': 'Mga Kakayahan',
+      'feat-title': 'Ginawa para sa<br><em>tunay na pangangailangan.</em>',
+      'feat-desc': 'Ang Tanaw ay dinisenyo kasama ang mga klinikano at occupational therapist upang matugunan ang mga pangangailangan ng mga pasyenteng may ALS, cerebral palsy, spinal cord injury, at iba pa.',
+      'f1-title': 'Tumpak na Eye Tracking',
+      'f1-desc': 'Gumagana sa karaniwang webcam at espesyal na eye-tracking hardware. Tinitiyak ng katumpakan ang tamang pagpili ng key nang walang pisikal na input.',
+      'f2-title': 'N-gram na Hula ng Salita',
+      'f2-desc': 'Isang magaan na n-gram na modelo ng wika ang humuhula ng pagkumpleto at susunod na salita — binabawasan ang pagsisikap nang hindi nangangailangan ng internet.',
+      'f3-title': 'Mga Custom na Parirala',
+      'f3-desc': 'Maaaring mag-load ng karaniwang mga parirala ang mga tagapag-alaga para sa mabilis na pagpili — perpekto para sa araw-araw na pangangailangan.',
+      'f4-title': 'Text-to-Speech na Output',
+      'f4-desc': 'Binabasa nang malakas ang mga naisulat na mensahe — sinusuportahan ang Ingles at Filipino para sa totoong komunikasyon.',
+      'f5-title': 'Madaling Setup para sa Tagapag-alaga',
+      'f5-desc': 'Ang tagapag-alaga o klinikano ang nag-aayos ng calibration. Pagkatapos, pinapatakbo ng pasyente ang lahat nang mag-isa sa pamamagitan ng tingin.',
+      'f6-title': 'Disenyo na Pabor sa Privacy',
+      'f6-desc': 'Lahat ng pagproseso ay nangyayari sa device. Walang sensitibong data ang ipinapadala sa mga panlabas na server.',
+      'for-eyebrow': 'Mga Pasyente at Tagapag-alaga',
+      'for-title': 'Sino ang tinutulungan<br><em>ng Tanaw.</em>',
+      'aud1-tag': 'Neurological', 'aud1-title': 'ALS at Motor Neuron Disease', 'aud1-desc': 'Habang bumababa ang kontrol sa kalamnan, pinapanatili ng Tanaw ang kakayahang makipag-usap — nagbibigay ng kalayaan sa pasyente nang matagal hangga\'t maaari.',
+      'aud2-tag': 'Pag-unlad', 'aud2-title': 'Cerebral Palsy', 'aud2-desc': 'Ang mga indibidwal na may limitadong kontrol sa kamay ay maaaring gumamit ng tingin upang mag-compose ng mensahe at makiisa sa lipunan.',
+      'aud3-tag': 'Natamong Sugat', 'aud3-title': 'Spinal Cord Injury', 'aud3-desc': 'Ang mga pasyenteng may mataas na cervical injury ay may buong kakayahang kognitibo ngunit kulang sa motor — binibigyan sila ng Tanaw ng boses.',
+      'aud4-tag': 'Intensive Care', 'aud4-title': 'Locked-In Syndrome', 'aud4-desc': 'Para sa mga pasyenteng halos ganap na paralysado, ang Tanaw ay maaaring maging pangunahing paraan ng komunikasyon.',
+      'cta-line1': 'Bawat<br>pasyente',
+      'cta-line2': 'ay may karapatang magsalita.',
+      'cta-sub': 'Kasalukuyang pinauunlad ang Tanaw. Humiling ng access para sa inyong pasilidad, pananaliksik, o mahal sa buhay.',
+      'cta-btn1': 'Humiling ng Access', 'cta-btn2': 'Mga Katanungan sa Pananaliksik',
+      'fl1': 'Privacy', 'fl2': 'Mga Kliniko', 'fl3': 'Makipag-ugnayan',
+      'footer-copy': 'Lahat ng karapatan ay nakalaan.'
     }
-  }, 1200);
+  };
 
-  // Intersection observer for fade-in
+  function setLang(lang) {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+    const data = strings[lang];
+    for (const [id, val] of Object.entries(data)) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = val;
+    }
+
+    // Nav links
+    document.querySelectorAll('nav ul a[data-en]').forEach(a => {
+      a.textContent = a.getAttribute('data-' + lang);
+    });
+  }
+
+  // ---- TANAW KEYBOARD DEMO ----
+  const demoSequence = [
+    { key: 'kI',  char: 'I',  sugs: ['i','ka','you','ngayon'] },
+    { key: 'kSpace', char: ' ', sugs: ['need','want','am','can'] },
+    { key: 'kN',  char: 'N',  sugs: ['need','now','not','no'] },
+    { key: 'kE',  char: 'E',  sugs: ['need','next','new','never'] },
+    { key: 'kE',  char: 'E',  sugs: ['need','neem','needing','needed'] },
+    { key: 'kD',  char: 'D',  sugs: ['need','needed','needing','needs'] },
+    { key: 'kSpace', char: ' ', sugs: ['help','water','medicine','rest'] },
+    { key: 'kH',  char: 'H',  sugs: ['help','here','him','her'] },
+    { key: 'kE',  char: 'E',  sugs: ['help','hello','her','held'] },
+    { key: 'kL',  char: 'L',  sugs: ['help','held','hello','helm'] },
+    { key: 'kP',  char: 'P',  sugs: ['help','helped','helping','helpful'] },
+  ];
+
+  const outputEl = document.getElementById('kb-output');
+  const sug1 = document.getElementById('sug1');
+  const sug2 = document.getElementById('sug2');
+  const sug3 = document.getElementById('sug3');
+  const sug4 = document.getElementById('sug4');
+
+  let typed = '';
+  let step = 0;
+
+  function highlightKey(id) {
+    document.querySelectorAll('.tanaw-key, .tanaw-spec-key').forEach(k => k.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+    setTimeout(() => { if (el) el.classList.remove('active'); }, 400);
+  }
+
+  function animateStep() {
+    if (step >= demoSequence.length) {
+      // Reset
+      step = 0; typed = '';
+      outputEl.innerHTML = '<span class="tanaw-cursor"></span>';
+      sug1.textContent = 'i'; sug2.textContent = 'ka'; sug3.textContent = 'you'; sug4.textContent = 'ngayon';
+      setTimeout(animateStep, 1800);
+      return;
+    }
+    const s = demoSequence[step];
+    highlightKey(s.key === 'kSpace' ? 'key-space' : s.key);
+    typed += s.char;
+    outputEl.innerHTML = typed + '<span class="tanaw-cursor"></span>';
+    sug1.textContent = s.sugs[0];
+    sug2.textContent = s.sugs[1];
+    sug3.textContent = s.sugs[2];
+    sug4.textContent = s.sugs[3];
+    step++;
+    setTimeout(animateStep, 900);
+  }
+
+  setTimeout(animateStep, 800);
+
+  // ---- FADE IN ----
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if(e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
+      if(e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
     });
   }, { threshold: 0.1 });
 
