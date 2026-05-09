@@ -56,9 +56,11 @@
     .eye-ring { width: min(420px, 38vw); height: min(420px, 38vw); border-radius: 50%; border: 1px solid rgba(245,244,240,0.15); display: flex; align-items: center; justify-content: center; position: relative; }
     .eye-ring::before { content: ''; position: absolute; inset: 16px; border-radius: 50%; border: 1px solid rgba(245,244,240,0.08); }
     .eye-ring::after { content: ''; position: absolute; inset: 36px; border-radius: 50%; border: 1px solid rgba(245,244,240,0.05); }
-    .eye-core { width: 140px; height: 140px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+    .eye-core { width: 140px; height: 140px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; overflow: hidden; }
+    .eye-pupil-wrapper { width: 60px; height: 60px; position: relative; transition: transform 0.1s ease-out; }
     .eye-pupil { width: 60px; height: 60px; border-radius: 50%; background: var(--black); position: relative; }
     .eye-pupil::after { content: ''; position: absolute; top: 12px; left: 12px; width: 14px; height: 14px; border-radius: 50%; background: var(--white); }
+    .eye-iris-ring { position: absolute; inset: 6px; border-radius: 50%; border: 2px solid rgba(100,100,100,0.3); pointer-events: none; }
     .scan-line { position: absolute; top: 50%; left: 50%; width: min(420px, 38vw); height: 1px; background: linear-gradient(90deg, transparent, rgba(245,244,240,0.3), transparent); transform: translate(-50%, -50%); animation: scan 3s ease-in-out infinite; }
     @keyframes scan { 0%, 100% { transform: translate(-50%, -50%) scaleX(0.3); opacity: 0; } 50% { transform: translate(-50%, -50%) scaleX(1); opacity: 1; } }
     .floating-key { position: absolute; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--gray-400); border: 1px solid var(--border); padding: 0.3rem 0.6rem; border-radius: 2px; background: rgba(10,10,10,0.6); animation: float 4s ease-in-out infinite; }
@@ -230,8 +232,11 @@
   <div class="hero-visual">
     <div class="eye-ring">
       <div class="scan-line"></div>
-      <div class="eye-core">
-        <div class="eye-pupil"></div>
+      <div class="eye-core" id="eye-core">
+        <div class="eye-pupil-wrapper" id="eye-pupil-wrapper">
+          <div class="eye-pupil"></div>
+          <div class="eye-iris-ring"></div>
+        </div>
       </div>
     </div>
     <div class="floating-key fk1">H E L P</div>
@@ -244,16 +249,16 @@
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stat">
-    <span class="stat-num">Gaze</span>
-    <span class="stat-label" id="stat1-label">Patient-Operated via Eye Movement</span>
+    <span class="stat-num">96.8%</span>
+    <span class="stat-label" id="stat1-label">Gaze-to-Text Accuracy (Controlled Lighting)</span>
   </div>
   <div class="stat">
-    <span class="stat-num">&lt; 1s</span>
-    <span class="stat-label" id="stat2-label">Key Selection Latency</span>
+    <span class="stat-num">13.6</span>
+    <span class="stat-label" id="stat2-label">Letters / min — Typing Speed</span>
   </div>
   <div class="stat">
-    <span class="stat-num">2</span>
-    <span class="stat-label" id="stat3-label">Languages — English & Filipino</span>
+    <span class="stat-num">97%</span>
+    <span class="stat-label" id="stat3-label">Word Suggestion Accuracy — English & Filipino</span>
   </div>
 </div>
 
@@ -274,14 +279,14 @@
         <span class="step-num">02</span>
         <div class="step-content">
           <h3 id="step2-title">Camera Tracks the Patient's Gaze</h3>
-          <p id="step2-desc">A standard front-facing camera reads the patient's eye position in real time. The patient then operates everything independently through gaze alone.</p>
+          <p id="step2-desc">MediaPipe Iris detects facial landmarks and tracks iris position in real time via a standard webcam. A Kalman Filter smooths gaze data to reduce jitter — no specialized hardware needed.</p>
         </div>
       </div>
       <div class="step">
         <span class="step-num">03</span>
         <div class="step-content">
           <h3 id="step3-title">Words Are Suggested Instantly</h3>
-          <p id="step3-desc">An n-gram language model predicts word completions and next-word suggestions based on what's been typed — reducing the number of eye movements needed.</p>
+          <p id="step3-desc">The N-gram Candidate Module predicts full words from abbreviated or partial inputs using Damerau-Levenshtein Distance — so typing "mbhy" can resolve to "mabuhay" in one gaze.</p>
         </div>
       </div>
       <div class="step">
@@ -354,21 +359,21 @@
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/></svg>
       </div>
       <h3 id="f1-title">Precision Eye Tracking</h3>
-      <p id="f1-desc">Works with standard webcams and dedicated eye-tracking hardware. Sub-degree gaze accuracy ensures confident key selection without physical input.</p>
+      <p id="f1-desc">Powered by MediaPipe Iris and a Kalman Filter for real-time, noise-resistant gaze estimation — using any standard built-in or external webcam. No specialized hardware required.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
       </div>
       <h3 id="f2-title">N-gram Word Prediction</h3>
-      <p id="f2-desc">A lightweight n-gram language model predicts word completions and next-word suggestions — reducing eye movement effort without requiring internet or heavy computation.</p>
+      <p id="f2-desc">The N-gram model is trained on corpora generated by RoBERTa-Tagalog and RoBERTa-Base — combined with Damerau-Levenshtein Distance to predict and correct words from partial or abbreviated inputs, achieving ~97% suggestion accuracy in both English and Filipino.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
-      <h3 id="f3-title">Custom Phrase Banks</h3>
-      <p id="f3-desc">Caregivers and clinicians can pre-load common phrases for fast access — ideal for urgent needs or daily routines.</p>
+      <h3 id="f3-title">Auto-Saved Phrase Shortcuts</h3>
+      <p id="f3-desc">When a patient types the same sentence 3–4 times, the system automatically saves it as a predefined phrase. One gaze on the Predefined Sentence button brings up the full list — no retyping needed.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
@@ -455,17 +460,17 @@
       'hero-desc': 'Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — operated through eye movement, with easy caregiver setup.',
       'btn-access': 'Request Early Access',
       'btn-how': 'See how it works',
-      'stat1-label': 'Patient-Operated via Eye Movement',
-      'stat2-label': 'Key Selection Latency',
-      'stat3-label': 'Languages — English & Filipino',
+      'stat1-label': 'Gaze-to-Text Accuracy (Controlled Lighting)',
+      'stat2-label': 'Letters / min — Typing Speed',
+      'stat3-label': 'Word Suggestion Accuracy — English & Filipino',
       'hiw-eyebrow': 'The Process',
       'hiw-title': 'Your eyes are<br><em>the keyboard.</em>',
       'step1-title': 'Caregiver Sets Up the Device',
       'step1-desc': 'A caregiver or clinician installs Tanaw and calibrates the camera to the patient\'s eye position. Setup takes only a few minutes and is done once.',
       'step2-title': 'Camera Tracks the Patient\'s Gaze',
-      'step2-desc': 'A standard front-facing camera reads the patient\'s eye position in real time. The patient then operates everything independently through gaze alone.',
+      'step2-desc': 'MediaPipe Iris detects facial landmarks and tracks iris position in real time via a standard webcam. A Kalman Filter smooths gaze data to reduce jitter — no specialized hardware needed.',
       'step3-title': 'Words Are Suggested Instantly',
-      'step3-desc': 'An n-gram language model predicts word completions and next-word suggestions based on what\'s been typed — reducing the number of eye movements needed.',
+      'step3-desc': 'The N-gram Candidate Module predicts full words from abbreviated or partial inputs using Damerau-Levenshtein Distance — so typing "mbhy" can resolve to "mabuhay" in one gaze.',
       'step4-title': 'Speech Output (Optional)',
       'step4-desc': 'Tanaw can read composed text aloud via text-to-speech, enabling verbal communication in social or clinical settings.',
       'gaze-label': 'Gaze Active',
@@ -474,11 +479,11 @@
       'feat-title': 'Built for<br><em>real needs.</em>',
       'feat-desc': 'Tanaw is designed with clinicians and occupational therapists to meet the nuanced needs of patients with ALS, cerebral palsy, spinal cord injuries, locked-in syndrome, and more.',
       'f1-title': 'Precision Eye Tracking',
-      'f1-desc': 'Works with standard webcams and dedicated eye-tracking hardware. Sub-degree gaze accuracy ensures confident key selection without physical input.',
+      'f1-desc': 'Powered by MediaPipe Iris and a Kalman Filter for real-time, noise-resistant gaze estimation — using any standard built-in or external webcam. No specialized hardware required.',
       'f2-title': 'N-gram Word Prediction',
-      'f2-desc': 'A lightweight n-gram language model predicts word completions and next-word suggestions — reducing eye movement effort without requiring internet or heavy computation.',
-      'f3-title': 'Custom Phrase Banks',
-      'f3-desc': 'Caregivers and clinicians can pre-load common phrases for fast access — ideal for urgent needs or daily routines.',
+      'f2-desc': 'The N-gram model is trained on corpora generated by RoBERTa-Tagalog and RoBERTa-Base — combined with Damerau-Levenshtein Distance to predict and correct words from partial or abbreviated inputs, achieving ~97% suggestion accuracy in both English and Filipino.',
+      'f3-title': 'Auto-Saved Phrase Shortcuts',
+      'f3-desc': 'When a patient types the same sentence 3–4 times, the system automatically saves it as a predefined phrase. One gaze on the Predefined Sentence button brings up the full list — no retyping needed.',
       'f4-title': 'Text-to-Speech Output',
       'f4-desc': 'High-quality voice synthesis reads composed messages aloud — supporting both English and Filipino for real-life communication.',
       'f5-title': 'Caregiver-Friendly Setup',
@@ -524,9 +529,9 @@
       'f1-title': 'Tumpak na Eye Tracking',
       'f1-desc': 'Gumagana sa karaniwang webcam at espesyal na eye-tracking hardware. Tinitiyak ng katumpakan ang tamang pagpili ng key nang walang pisikal na input.',
       'f2-title': 'N-gram na Hula ng Salita',
-      'f2-desc': 'Isang magaan na n-gram na modelo ng wika ang humuhula ng pagkumpleto at susunod na salita — binabawasan ang pagsisikap nang hindi nangangailangan ng internet.',
-      'f3-title': 'Mga Custom na Parirala',
-      'f3-desc': 'Maaaring mag-load ng karaniwang mga parirala ang mga tagapag-alaga para sa mabilis na pagpili — perpekto para sa araw-araw na pangangailangan.',
+      'f2-desc': 'Ang N-gram na modelo ay sinanay gamit ang mga corpus mula sa RoBERTa-Tagalog at RoBERTa-Base — kasama ang Damerau-Levenshtein Distance para hulaan at itama ang mga salita mula sa pinaikling input, na may ~97% na katumpakan sa Ingles at Filipino.',
+      'f3-title': 'Awtomatikong Naise-save na Parirala',
+      'f3-desc': 'Kapag nai-type ng pasyente ang parehong pangungusap nang 3–4 beses, awtomatiko itong nase-save bilang predefined phrase. Isang tingin sa Predefined Sentence button — at lilitaw na agad ang buong listahan.',
       'f4-title': 'Text-to-Speech na Output',
       'f4-desc': 'Binabasa nang malakas ang mga naisulat na mensahe — sinusuportahan ang Ingles at Filipino para sa totoong komunikasyon.',
       'f5-title': 'Madaling Setup para sa Tagapag-alaga',
@@ -617,6 +622,71 @@
   }
 
   setTimeout(animateStep, 800);
+
+  // ---- EYE MOVEMENT ----
+  const eyeCore = document.getElementById('eye-core');
+  const pupilWrapper = document.getElementById('eye-pupil-wrapper');
+
+  // Max offset the pupil can travel (radius of eye-core minus half of pupil)
+  const maxOffset = 30; // px
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
+  let mouseControlled = false;
+  let idleTimer = null;
+
+  function clampPupil(x, y) {
+    const dist = Math.sqrt(x * x + y * y);
+    if (dist > maxOffset) {
+      return { x: (x / dist) * maxOffset, y: (y / dist) * maxOffset };
+    }
+    return { x, y };
+  }
+
+  // Idle drift animation (autonomous gaze movement)
+  let idleT = 0;
+  function idleDrift() {
+    idleT += 0.018;
+    const x = Math.sin(idleT * 1.3) * 18;
+    const y = Math.cos(idleT * 0.9) * 10;
+    targetX = x; targetY = y;
+  }
+
+  let driftInterval = setInterval(idleDrift, 16);
+
+  // Mouse tracking
+  document.addEventListener('mousemove', (e) => {
+    if (!eyeCore) return;
+    const rect = eyeCore.getBoundingClientRect();
+    const eyeCenterX = rect.left + rect.width / 2;
+    const eyeCenterY = rect.top + rect.height / 2;
+    const dx = e.clientX - eyeCenterX;
+    const dy = e.clientY - eyeCenterY;
+    const angle = Math.atan2(dy, dx);
+    const dist = Math.min(Math.sqrt(dx * dx + dy * dy), 400);
+    const influence = dist / 400;
+    targetX = Math.cos(angle) * maxOffset * influence;
+    targetY = Math.sin(angle) * maxOffset * influence;
+
+    mouseControlled = true;
+    clearInterval(driftInterval);
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      mouseControlled = false;
+      driftInterval = setInterval(idleDrift, 16);
+    }, 3000);
+  });
+
+  // Smooth lerp loop
+  function animateEye() {
+    currentX += (targetX - currentX) * 0.08;
+    currentY += (targetY - currentY) * 0.08;
+    const clamped = clampPupil(currentX, currentY);
+    if (pupilWrapper) {
+      pupilWrapper.style.transform = `translate(${clamped.x}px, ${clamped.y}px)`;
+    }
+    requestAnimationFrame(animateEye);
+  }
+  animateEye();
 
   // ---- FADE IN ----
   const observer = new IntersectionObserver((entries) => {
