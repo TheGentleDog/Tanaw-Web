@@ -1,0 +1,60 @@
+/* Optional finishing touches. Remove the visual-polish.css link in index.html
+   to revert these styles while keeping the single keyboard decoration.
+   Each numbered group can also be removed independently. */
+
+/* 1. A quiet dot texture and a soft pool of light behind the eye. */
+.hero {
+  /* Adjust this value to make the dots lighter or stronger. */
+  --dot-opacity: .12;
+  background-image:
+    radial-gradient(ellipse at 76% 52%, rgba(215, 219, 210, .035), transparent 48%),
+    radial-gradient(circle at center, rgba(245, 244, 240, var(--dot-opacity)) 1px, transparent 1.5px);
+  background-size: auto, 32px 32px;
+  background-repeat: no-repeat, repeat;
+}
+.hero .eye-ring {
+  box-shadow: 0 0 90px rgba(245, 244, 240, .025), inset 0 0 60px rgba(245, 244, 240, .015);
+}
+
+/* 2. Small editorial rules make section labels feel deliberate. */
+.section-eyebrow { display: flex; align-items: center; gap: 12px; }
+.section-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: rgba(245, 244, 240, .35);
+  flex: 0 0 auto;
+}
+.hero-tag { border-radius: 3px; background: rgba(245, 244, 240, .02); }
+
+/* 3. Gentle surface shading for the stats and information cards. */
+.stats-bar {
+  background: linear-gradient(180deg, rgba(245, 244, 240, .025), transparent);
+}
+.stat + .stat { border-left: 1px solid var(--border); padding-left: 2rem; }
+.feature-card {
+  background: linear-gradient(145deg, #2a2a28, #222220);
+  box-shadow: inset 0 1px 0 rgba(245, 244, 240, .045);
+}
+.audience-card {
+  background: linear-gradient(145deg, rgba(245, 244, 240, .025), transparent 75%);
+}
+
+/* 4. Laptop surroundings only. These are stage backgrounds, painted beneath
+   the opaque laptop and screen, including throughout the scroll zoom.
+   Remove this group to undo the laptop background styling. */
+.entrance-stage {
+  --laptop-dot-opacity: .12;
+  background-color: var(--black);
+  background-image:
+    radial-gradient(ellipse at 50% 56%, var(--black) 20%, transparent 68%),
+    radial-gradient(circle at center, rgba(245, 244, 240, var(--laptop-dot-opacity)) 1px, transparent 1.5px);
+  background-size: auto, 32px 32px;
+  background-repeat: no-repeat, repeat;
+}
+
+@media (max-width: 900px) {
+  .entrance-stage { background-size: auto, 28px 28px; }
+  .hero { background-size: auto, 28px 28px; }
+  .stat + .stat { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+}

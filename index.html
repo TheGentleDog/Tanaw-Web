@@ -37,6 +37,13 @@
     .lang-btn.active { background: var(--white); color: var(--black); }
 
     /* HERO */
+    .hero { isolation: isolate; }
+    .hero-left, .hero-visual { position: relative; z-index: 1; }
+    .hero-keyboard { position: absolute; z-index: 0; pointer-events: none; user-select: none; width: clamp(560px, 58vw, 1000px); aspect-ratio: 76 / 31; background: url('assets/keyboard-outline.svg') center / contain no-repeat; opacity: .11; mask-image: radial-gradient(ellipse at center, #000 15%, transparent 72%); -webkit-mask-image: radial-gradient(ellipse at center, #000 15%, transparent 72%); }
+    .hero-keyboard-top { top: -35px; left: -110px; transform: rotate(-19deg); }
+    @media (max-width: 900px) {
+      .hero-keyboard-top { top: 20px; left: -190px; opacity: .08; }
+    }
     .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 4rem 4rem; gap: 4rem; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw; border-radius: 50%; border: 1px solid rgba(245,244,240,0.06); pointer-events: none; }
     .hero::after { content: ''; position: absolute; top: 5%; right: 5%; width: 35vw; height: 35vw; border-radius: 50%; border: 1px solid rgba(245,244,240,0.04); pointer-events: none; }
@@ -63,12 +70,19 @@
     .eye-iris-ring { position: absolute; inset: 6px; border-radius: 50%; border: 2px solid rgba(100,100,100,0.3); pointer-events: none; }
     .scan-line { position: absolute; top: 50%; left: 50%; width: min(420px, 38vw); height: 1px; background: linear-gradient(90deg, transparent, rgba(245,244,240,0.3), transparent); transform: translate(-50%, -50%); animation: scan 3s ease-in-out infinite; }
     @keyframes scan { 0%, 100% { transform: translate(-50%, -50%) scaleX(0.3); opacity: 0; } 50% { transform: translate(-50%, -50%) scaleX(1); opacity: 1; } }
-    .floating-key { position: absolute; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--gray-400); border: 1px solid var(--border); padding: 0.3rem 0.6rem; border-radius: 2px; background: rgba(10,10,10,0.6); animation: float 4s ease-in-out infinite; }
+    .floating-key { position: absolute; z-index: 3; font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; color: var(--white); border: 1px solid rgba(245,244,240,.35); padding: 1rem 1.2rem; min-height: 56px; display: inline-flex; align-items: center; gap: 1rem; border-radius: 8px; background: linear-gradient(145deg, #282827, #171716); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 4px 0 #050505, 0 8px 20px rgba(0,0,0,.35); text-decoration: none; cursor: pointer; transition: background .2s, color .2s, border-color .2s, transform .2s, box-shadow .2s; }
+    .floating-key::after { content: '\2197'; font-size: 1.15rem; line-height: 1; transition: transform .2s; }
+    .floating-key:hover, .floating-key:focus-visible { background: var(--white); color: var(--black); border-color: var(--white); transform: translateY(-3px); box-shadow: 0 6px 0 #41413e, 0 12px 24px rgba(0,0,0,.4); }
+    .floating-key:hover::after, .floating-key:focus-visible::after { transform: translate(2px, -2px); }
+    .floating-key:active { transform: translateY(2px); box-shadow: 0 1px 0 #41413e; }
+    .floating-key:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
+    section[id] { scroll-margin-top: 90px; }
+    @media (prefers-reduced-motion: reduce) { .floating-key, .floating-key::after { transition: none; } }
     .fk1 { top: 10%; left: 5%; animation-delay: 0s; }
     .fk2 { top: 20%; right: 5%; animation-delay: 0.8s; }
     .fk3 { bottom: 20%; left: 0%; animation-delay: 1.6s; }
     .fk4 { bottom: 10%; right: 8%; animation-delay: 2.4s; }
-    @keyframes float { 0%, 100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-8px); opacity: 0.9; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
     /* STATS BAR */
     .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
@@ -174,7 +188,9 @@
       nav { padding: 1rem 1.5rem; }
       nav ul { display: none; }
       .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
-      .hero-visual { display: none; }
+      .hero-visual { display: flex; min-height: 350px; }
+      .hero-visual .eye-ring { width: 280px; height: 280px; }
+      .hero-visual .floating-key { font-size: .72rem; padding: .85rem; min-height: 50px; gap: .6rem; max-width: 48%; }
       .stats-bar { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
       section { padding: 5rem 1.5rem; }
       .hiw-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -193,8 +209,28 @@
     h1[data-lang].visible, h2[data-lang].visible, h3[data-lang].visible { display: block; }
     div[data-lang].visible { display: block; }
   </style>
+  <link rel="stylesheet" href="entrance.css" />
+  <!-- Optional visual polish: remove this link to undo the extra styling. -->
+  <link rel="stylesheet" href="visual-polish.css" />
+  <script src="entrance.js" defer></script>
 </head>
 <body>
+<div class="logo-intro" id="logo-intro" hidden role="dialog" aria-label="Welcome to Tanaw" aria-modal="true">
+  <img src="assets/tanaw-whitebg.gif" alt="Animated Tanaw eye logo" width="1920" height="1080" />
+  <button type="button" id="skip-intro">Skip intro</button>
+</div>
+
+<section class="entrance" id="entrance" aria-label="Enter the world of Tanaw" hidden>
+  <div class="entrance-stage">
+    <div class="entrance-heading"><p>A NEW WAY TO CONNECT</p><h1>A glance.<br />A world of possibility.</h1></div>
+    <div class="laptop" aria-hidden="true">
+      <div class="laptop-lid"><div class="laptop-camera"></div>
+        <div class="laptop-screen"><span class="screen-label">TANAW / ASSISTIVE COMMUNICATION</span><img class="screen-logo" src="assets/blink_transparent.gif" alt="Tanaw logo" /><p>Your eyes.<br /><em>Your voice.</em></p><span class="screen-caption">Connection begins with a glance.</span></div>
+      </div><div class="laptop-base"><div></div></div>
+    </div>
+    <a class="entrance-scroll" href="#main-content">Scroll to step inside <span aria-hidden="true">↓</span></a>
+  </div>
+</section>
 
 <!-- NAV -->
 <nav>
@@ -202,12 +238,6 @@
     <a href="#" class="logo">Tanaw<span>.</span></a>
     <span class="logo-byline">by SeenByEveryone</span>
   </div>
-  <ul>
-    <li><a href="#how" data-en="How It Works" data-fil="Paano Gumagana">How It Works</a></li>
-    <li><a href="#features" data-en="Features" data-fil="Mga Tampok">Features</a></li>
-    <li><a href="#for" data-en="Who It's For" data-fil="Para Kanino">Who It's For</a></li>
-    <li><a href="#contact" class="nav-cta" data-en="Get Access" data-fil="Makakuha">Get Access</a></li>
-  </ul>
   <div class="lang-toggle">
     <button class="lang-btn active" onclick="setLang('en')">EN</button>
     <button class="lang-btn" onclick="setLang('fil')">FIL</button>
@@ -215,7 +245,8 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero" style="padding-top: 8rem;">
+<section class="hero" id="main-content" tabindex="-1" style="padding-top: 8rem;">
+  <div class="hero-keyboard hero-keyboard-top" aria-hidden="true"></div>
   <div class="hero-left">
     <div class="hero-tag" id="hero-tag">Assistive Communication Technology</div>
     <h1 class="hero-title">
@@ -239,10 +270,10 @@
         </div>
       </div>
     </div>
-    <div class="floating-key fk1">H E L P</div>
-    <div class="floating-key fk2">B A N A N A</div>
-    <div class="floating-key fk3">M E</div>
-    <div class="floating-key fk4">B R E A D</div>
+    <a class="floating-key fk1" href="#how" data-en="How it works" data-fil="Paano gumagana">How it works</a>
+    <a class="floating-key fk2" href="#features" data-en="Features" data-fil="Mga tampok">Features</a>
+    <a class="floating-key fk3" href="#for" data-en="Who’s it for" data-fil="Para kanino">Who’s it for</a>
+    <a class="floating-key fk4" href="#team" data-en="Meet the team" data-fil="Kilalanin ang koponan">Meet the team</a>
   </div>
 </section>
 
@@ -427,6 +458,12 @@
   </div>
 </section>
 
+<section id="team" aria-labelledby="team-title">
+  <div class="section-eyebrow" data-en="Meet the team" data-fil="Kilalanin ang koponan">Meet the team</div>
+  <h2 class="section-title" id="team-title">SeenByEveryone</h2>
+  <p class="hero-desc" data-en="The team behind Tanaw, a gaze-based digital keyboard for assistive communication." data-fil="Ang koponan sa likod ng Tanaw, isang digital na keyboard na gumagamit ng tingin upang makatulong sa komunikasyon.">The team behind Tanaw, a gaze-based digital keyboard for assistive communication.</p>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <span class="cta-word" id="cta-line1">Every<br>patient</span>
@@ -564,7 +601,7 @@
     }
 
     // Nav links
-    document.querySelectorAll('nav ul a[data-en]').forEach(a => {
+    document.querySelectorAll('[data-en][data-fil]').forEach(a => {
       a.textContent = a.getAttribute('data-' + lang);
     });
   }

@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="310" viewBox="0 0 760 310" fill="none">
+<g stroke="#d1d0cb" stroke-width="1">
+<rect x="14" y="14" width="47" height="27" rx="5"/>
+<rect x="68" y="14" width="47" height="27" rx="5"/>
+<rect x="122" y="14" width="47" height="27" rx="5"/>
+<rect x="176" y="14" width="47" height="27" rx="5"/>
+<rect x="230" y="14" width="47" height="27" rx="5"/>
+<rect x="284" y="14" width="47" height="27" rx="5"/>
+<rect x="338" y="14" width="47" height="27" rx="5"/>
+<rect x="392" y="14" width="47" height="27" rx="5"/>
+<rect x="446" y="14" width="47" height="27" rx="5"/>
+<rect x="500" y="14" width="47" height="27" rx="5"/>
+<rect x="554" y="14" width="47" height="27" rx="5"/>
+<rect x="608" y="14" width="47" height="27" rx="5"/>
+<rect x="662" y="14" width="47" height="27" rx="5"/>
+<rect x="14" y="52" width="47" height="42" rx="5"/>
+<rect x="68" y="52" width="47" height="42" rx="5"/>
+<rect x="122" y="52" width="47" height="42" rx="5"/>
+<rect x="176" y="52" width="47" height="42" rx="5"/>
+<rect x="230" y="52" width="47" height="42" rx="5"/>
+<rect x="284" y="52" width="47" height="42" rx="5"/>
+<rect x="338" y="52" width="47" height="42" rx="5"/>
+<rect x="392" y="52" width="47" height="42" rx="5"/>
+<rect x="446" y="52" width="47" height="42" rx="5"/>
+<rect x="500" y="52" width="47" height="42" rx="5"/>
+<rect x="554" y="52" width="47" height="42" rx="5"/>
+<rect x="608" y="52" width="47" height="42" rx="5"/>
+<rect x="662" y="52" width="47" height="42" rx="5"/>
+<rect x="30" y="102" width="47" height="42" rx="5"/>
+<rect x="84" y="102" width="47" height="42" rx="5"/>
+<rect x="138" y="102" width="47" height="42" rx="5"/>
+<rect x="192" y="102" width="47" height="42" rx="5"/>
+<rect x="246" y="102" width="47" height="42" rx="5"/>
+<rect x="300" y="102" width="47" height="42" rx="5"/>
+<rect x="354" y="102" width="47" height="42" rx="5"/>
+<rect x="408" y="102" width="47" height="42" rx="5"/>
+<rect x="462" y="102" width="47" height="42" rx="5"/>
+<rect x="516" y="102" width="47" height="42" rx="5"/>
+<rect x="570" y="102" width="47" height="42" rx="5"/>
+<rect x="624" y="102" width="47" height="42" rx="5"/>
+<rect x="678" y="102" width="47" height="42" rx="5"/>
+<rect x="44" y="152" width="47" height="42" rx="5"/>
+<rect x="98" y="152" width="47" height="42" rx="5"/>
+<rect x="152" y="152" width="47" height="42" rx="5"/>
+<rect x="206" y="152" width="47" height="42" rx="5"/>
+<rect x="260" y="152" width="47" height="42" rx="5"/>
+<rect x="314" y="152" width="47" height="42" rx="5"/>
+<rect x="368" y="152" width="47" height="42" rx="5"/>
+<rect x="422" y="152" width="47" height="42" rx="5"/>
+<rect x="476" y="152" width="47" height="42" rx="5"/>
+<rect x="530" y="152" width="47" height="42" rx="5"/>
+<rect x="584" y="152" width="47" height="42" rx="5"/>
+<rect x="638" y="152" width="47" height="42" rx="5"/>
+<rect x="58" y="202" width="47" height="42" rx="5"/>
+<rect x="112" y="202" width="47" height="42" rx="5"/>
+<rect x="166" y="202" width="47" height="42" rx="5"/>
+<rect x="220" y="202" width="47" height="42" rx="5"/>
+<rect x="274" y="202" width="47" height="42" rx="5"/>
+<rect x="328" y="202" width="47" height="42" rx="5"/>
+<rect x="382" y="202" width="47" height="42" rx="5"/>
+<rect x="436" y="202" width="47" height="42" rx="5"/>
+<rect x="490" y="202" width="47" height="42" rx="5"/>
+<rect x="544" y="202" width="47" height="42" rx="5"/>
+<rect x="598" y="202" width="47" height="42" rx="5"/>
+<rect x="652" y="202" width="47" height="42" rx="5"/>
+<rect x="110" y="252" width="64" height="42" rx="5"/><rect x="181" y="252" width="64" height="42" rx="5"/><rect x="252" y="252" width="270" height="42" rx="5"/><rect x="529" y="252" width="64" height="42" rx="5"/><rect x="600" y="252" width="64" height="42" rx="5"/>
+</g>
+<g fill="#d1d0cb" font-family="monospace" font-size="12" text-anchor="middle">
+<text x="37.5" y="32">esc</text>
+<text x="91.5" y="32">F1</text>
+<text x="145.5" y="32">F2</text>
+<text x="199.5" y="32">F3</text>
+<text x="253.5" y="32">F4</text>
+<text x="307.5" y="32">F5</text>
+<text x="361.5" y="32">F6</text>
+<text x="415.5" y="32">F7</text>
+<text x="469.5" y="32">F8</text>
+<text x="523.5" y="32">F9</text>
+<text x="577.5" y="32">F10</text>
+<text x="631.5" y="32">F11</text>
+<text x="685.5" y="32">F12</text>
+<text x="37.5" y="78">~</text>
+<text x="91.5" y="78">1</text>
+<text x="145.5" y="78">2</text>
+<text x="199.5" y="78">3</text>
+<text x="253.5" y="78">4</text>
+<text x="307.5" y="78">5</text>
+<text x="361.5" y="78">6</text>
+<text x="415.5" y="78">7</text>
+<text x="469.5" y="78">8</text>
+<text x="523.5" y="78">9</text>
+<text x="577.5" y="78">0</text>
+<text x="631.5" y="78">−</text>
+<text x="685.5" y="78">=</text>
+<text x="53.5" y="128">tab</text>
+<text x="107.5" y="128">Q</text>
+<text x="161.5" y="128">W</text>
+<text x="215.5" y="128">E</text>
+<text x="269.5" y="128">R</text>
+<text x="323.5" y="128">T</text>
+<text x="377.5" y="128">Y</text>
+<text x="431.5" y="128">U</text>
+<text x="485.5" y="128">I</text>
+<text x="539.5" y="128">O</text>
+<text x="593.5" y="128">P</text>
+<text x="647.5" y="128">[</text>
+<text x="701.5" y="128">]</text>
+<text x="67.5" y="178">caps</text>
+<text x="121.5" y="178">A</text>
+<text x="175.5" y="178">S</text>
+<text x="229.5" y="178">D</text>
+<text x="283.5" y="178">F</text>
+<text x="337.5" y="178">G</text>
+<text x="391.5" y="178">H</text>
+<text x="445.5" y="178">J</text>
+<text x="499.5" y="178">K</text>
+<text x="553.5" y="178">L</text>
+<text x="607.5" y="178">;</text>
+<text x="661.5" y="178">enter</text>
+<text x="81.5" y="228">shift</text>
+<text x="135.5" y="228">Z</text>
+<text x="189.5" y="228">X</text>
+<text x="243.5" y="228">C</text>
+<text x="297.5" y="228">V</text>
+<text x="351.5" y="228">B</text>
+<text x="405.5" y="228">N</text>
+<text x="459.5" y="228">M</text>
+<text x="513.5" y="228">,</text>
+<text x="567.5" y="228">.</text>
+<text x="621.5" y="228">/</text>
+<text x="675.5" y="228">shift</text>
+<text x="142" y="278">ctrl</text><text x="213" y="278">alt</text><text x="561" y="278">alt</text><text x="632" y="278">fn</text>
+</g>
+</svg>
