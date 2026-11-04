@@ -2,6 +2,57 @@
   const intro = document.getElementById('logo-intro');
   const entrance = document.getElementById('entrance');
   const nav = document.querySelector('nav');
+  // Keep section headings clear of the fixed navigation at every screen size.
+  function updateScrollOffset() {
+    document.documentElement.style.setProperty('--section-scroll-offset', `${nav.getBoundingClientRect().height + 16}px`);
+  }
+  updateScrollOffset();
+  if ('ResizeObserver' in window) new ResizeObserver(updateScrollOffset).observe(nav);
+  let scrollFrame = null;
+  function cancelSectionScroll() {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = null;
+  }
+  window.addEventListener('wheel', cancelSectionScroll, { passive: true });
+  window.addEventListener('touchstart', cancelSectionScroll, { passive: true });
+  window.addEventListener('popstate', cancelSectionScroll);
+  window.addEventListener('keydown', (event) => {
+    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape'].includes(event.key)) cancelSectionScroll();
+  });
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+    const hash = link.getAttribute('href');
+    const target = document.getElementById(hash.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    cancelSectionScroll();
+    // Local-file browsers may disallow history updates; scrolling still works.
+    try {
+      if (location.hash !== hash) history.pushState(null, '', hash);
+    } catch { /* Keep the current URL when history is unavailable. */ }
+    updateScrollOffset();
+    const start = window.scrollY;
+    const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    const end = Math.max(0, Math.min(start + target.getBoundingClientRect().top - offset,
+      document.documentElement.scrollHeight - window.innerHeight));
+    const finish = () => {
+      scrollFrame = null;
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    };
+    const duration = Math.min(1400, Math.max(650, Math.abs(end - start) * .45));
+    const started = performance.now();
+    function animateScroll(now) {
+      const progress = Math.min(1, (now - started) / duration);
+      const eased = progress * progress * (3 - 2 * progress);
+      window.scrollTo({ top: start + (end - start) * eased, behavior: 'instant' });
+      if (progress < 1) scrollFrame = requestAnimationFrame(animateScroll);
+      else finish();
+    }
+    scrollFrame = requestAnimationFrame(animateScroll);
+  });
   // Refresh replays the entrance even after using a section link.
   // A fresh visit to a shared section URL still goes directly to that section.
   const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
