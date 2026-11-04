@@ -141,13 +141,15 @@
     if (event.key === 'Tab') { event.preventDefault(); skip.focus(); }
   });
   const logo = intro.querySelector('img');
-  // The single-play GIF cannot restart if downloading delays this timer.
+  // Reveal only after loading, preventing partial playback during a cold download.
   const startTimer = () => {
     if (done) return;
+    logo.style.visibility = 'visible';
     clearTimeout(introTimer);
     introTimer = setTimeout(finishIntro, 3900);
   };
   logo.addEventListener('error', finishIntro, { once: true });
-  if (logo.complete) startTimer();
-  else { logo.addEventListener('load', startTimer, { once: true }); introTimer = setTimeout(finishIntro, 20000); }
+  logo.addEventListener('load', startTimer, { once: true });
+  introTimer = setTimeout(finishIntro, 20000);
+  logo.src = logo.dataset.src;
 })();
