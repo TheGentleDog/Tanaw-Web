@@ -80,7 +80,7 @@
     .floating-key:hover::after, .floating-key:focus-visible::after { transform: translate(2px, -2px); }
     .floating-key:active { transform: translateY(2px); box-shadow: 0 1px 0 #41413e; }
     .floating-key:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
-    section[id] { scroll-margin-top: 90px; }
+    section[id] { scroll-margin-top: var(--section-scroll-offset, 90px); }
     @media (prefers-reduced-motion: reduce) { .floating-key, .floating-key::after { transition: none; } }
     .fk1 { top: 10%; left: 5%; animation-delay: 0s; }
     .fk2 { top: 20%; right: 5%; animation-delay: 0.8s; }
