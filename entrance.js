@@ -71,7 +71,7 @@
     if (done) return;
     done = true;
     clearTimeout(introTimer);
-    // Crossfade before the GIF loops; keep its original playback and colors.
+    // Crossfade to the laptop; the intro GIF plays once and holds its final frame.
     intro.classList.add('is-finished');
     document.body.classList.add('intro-revealing');
     let fadeFinished = false;
@@ -141,9 +141,15 @@
     if (event.key === 'Tab') { event.preventDefault(); skip.focus(); }
   });
   const logo = intro.querySelector('img');
-  // Start the one-second fade before the 4,960 ms animation ends.
-  const startTimer = () => { clearTimeout(introTimer); introTimer = setTimeout(finishIntro, 3900); };
+  // Reveal only after loading, preventing partial playback during a cold download.
+  const startTimer = () => {
+    if (done) return;
+    logo.style.visibility = 'visible';
+    clearTimeout(introTimer);
+    introTimer = setTimeout(finishIntro, 3900);
+  };
   logo.addEventListener('error', finishIntro, { once: true });
-  if (logo.complete) startTimer();
-  else { logo.addEventListener('load', startTimer, { once: true }); introTimer = setTimeout(finishIntro, 20000); }
+  logo.addEventListener('load', startTimer, { once: true });
+  introTimer = setTimeout(finishIntro, 20000);
+  logo.src = logo.dataset.src;
 })();
