@@ -88,12 +88,6 @@
     .fk4 { bottom: 10%; right: 8%; animation-delay: 2.4s; }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-    /* STATS BAR */
-    .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-    .stat { display: flex; flex-direction: column; gap: 0.3rem; }
-    .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.8rem; letter-spacing: -0.04em; line-height: 1; }
-    .stat-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); }
-
     /* SECTIONS */
     section { padding: 7rem 4rem; }
     .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 1rem; }
@@ -220,7 +214,6 @@
       .hero-visual { display: flex; min-height: 350px; }
       .hero-visual .eye-ring { width: 280px; height: 280px; }
       .hero-visual .floating-key { font-size: .72rem; padding: .85rem; min-height: 50px; gap: .6rem; max-width: 48%; }
-      .stats-bar { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
       section { padding: 5rem 1.5rem; }
       .hiw-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .features-header { grid-template-columns: 1fr; gap: 1rem; }
@@ -312,22 +305,6 @@
     <a class="floating-key fk4" href="#team" data-en="Meet the team" data-fil="Kilalanin ang koponan">Meet the team</a>
   </div>
 </section>
-
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat">
-    <span class="stat-num">96.8%</span>
-    <span class="stat-label" id="stat1-label">Gaze-to-Text Accuracy (Controlled Lighting)</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num">13.6</span>
-    <span class="stat-label" id="stat2-label">Letters / min — Typing Speed</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num">97%</span>
-    <span class="stat-label" id="stat3-label">Word Suggestion Accuracy — English & Filipino</span>
-  </div>
-</div>
 
 <!-- HOW IT WORKS -->
 <section id="how">
@@ -567,9 +544,6 @@
       'hero-desc': 'Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — operated through eye movement, with easy caregiver setup.',
       'btn-access': 'Request Early Access',
       'btn-how': 'See how it works',
-      'stat1-label': 'Gaze-to-Text Accuracy (Controlled Lighting)',
-      'stat2-label': 'Letters / min — Typing Speed',
-      'stat3-label': 'Word Suggestion Accuracy — English & Filipino',
       'hiw-eyebrow': 'The Process',
       'step1-title': 'Caregiver Sets Up the Device',
       'step1-desc': 'A caregiver or clinician installs Tanaw and calibrates the camera to the patient\'s eye position. Setup takes only a few minutes and is done once.',
@@ -614,9 +588,6 @@
       'hero-desc': 'Ang Tanaw ay isang digital na keyboard na gumagamit ng tingin upang tulungan ang mga pasyenteng may kapansanan sa paggalaw at pananalita na mabawi ang kanilang kakayahang makipag-usap — pinapatakbo ng mata, na ini-set up ng tagapag-alaga.',
       'btn-access': 'Humiling ng Access',
       'btn-how': 'Tingnan kung paano',
-      'stat1-label': 'Pinapatakbo ng Pasyente sa pamamagitan ng Mata',
-      'stat2-label': 'Bilis ng Pagpili ng Key',
-      'stat3-label': 'Mga Wika — Ingles at Filipino',
       'hiw-eyebrow': 'Ang Proseso',
       'hiw-title': 'Ang iyong mga mata<br><em>ang keyboard.</em>',
       'step1-title': 'Ini-set up ng Tagapag-alaga ang Device',
