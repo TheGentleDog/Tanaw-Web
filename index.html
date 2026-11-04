@@ -20,10 +20,14 @@
     body { background: var(--black); color: var(--white); font-family: 'Manrope', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; }
 
     /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); background: rgba(10,10,10,0.7); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: .625rem 4rem .625rem 2rem; border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); background: rgba(10,10,10,0.7); }
     .logo { font-family: 'DM Serif Display', serif; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--white); text-decoration: none; }
     .logo span { font-style: italic; color: var(--gray-400); }
-    .logo-group { display: flex; flex-direction: column; gap: 0.05rem; }
+    .logo-group { display: flex; align-items: center; gap: 1rem; }
+    .header-logo-gif { width: 52px; height: 52px; object-fit: contain; flex: 0 0 auto; transform: scale(1.384615); }
+    .logo-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+    .logo-text .logo { line-height: 1.2; }
+    .logo-text .logo-byline { line-height: 1.4; text-transform: none; position: relative; left: 1px; }
     .logo-byline { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-400); }
     nav ul { display: flex; gap: 2.5rem; list-style: none; }
     nav ul a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); text-decoration: none; transition: color 0.2s; }
@@ -185,7 +189,7 @@
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      nav { padding: 1rem 1.5rem; }
+      nav { padding: .625rem 1.5rem .625rem .75rem; }
       nav ul { display: none; }
       .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
       .hero-visual { display: flex; min-height: 350px; }
@@ -208,7 +212,11 @@
     p[data-lang].visible { display: block; }
     h1[data-lang].visible, h2[data-lang].visible, h3[data-lang].visible { display: block; }
     div[data-lang].visible { display: block; }
+    /* Brand typography: remove these rules and the Krona One link to revert. */
+    .tanaw-name, .logo, .footer-logo { font-family: 'Krona One', sans-serif; font-weight: 400; text-transform: uppercase; font-style: normal; letter-spacing: .035em; }
+    .logo .tanaw-name { color: inherit; font-style: normal; }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Krona+One&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="entrance.css" />
   <!-- Optional visual polish: remove this link to undo the extra styling. -->
   <link rel="stylesheet" href="visual-polish.css" />
@@ -235,8 +243,11 @@
 <!-- NAV -->
 <nav>
   <div class="logo-group">
-    <a href="#" class="logo">Tanaw<span>.</span></a>
-    <span class="logo-byline">by SeenByEveryone</span>
+    <img class="header-logo-gif" src="assets/blink_transparent.gif" alt="" width="72" height="72" />
+    <div class="logo-text">
+    <a href="#" class="logo">TANAW</a>
+    <span class="logo-byline">By SeenByEveryone</span>
+    </div>
   </div>
   <div class="lang-toggle">
     <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -250,7 +261,7 @@
   <div class="hero-left">
     <div class="hero-tag" id="hero-tag">Assistive Communication Technology</div>
     <h1 class="hero-title">
-      <span data-en="See it.<br><em>Type it.</em>" data-fil="Titigan.<br><em>I-type.</em>">See it.<br><em>Type it.</em></span>
+      <span data-en="For every gaze.<br><em>You are heard.</em>" data-fil="Titigan.<br><em>I-type.</em>">For every gaze.<br><em>You are heard.</em></span>
     </h1>
     <p class="hero-desc" id="hero-desc">
       Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — operated through eye movement, with easy caregiver setup.
@@ -478,7 +489,7 @@
 <!-- FOOTER -->
 <footer>
   <div>
-    <div class="footer-logo">Tanaw.</div>
+    <div class="footer-logo">TANAW</div>
     <div class="footer-group">SeenByEveryone &copy; 2025</div>
   </div>
   <div class="footer-links">
@@ -590,6 +601,29 @@
     }
   };
 
+  // Style only the brand name, including mentions within paragraphs.
+  function styleTanawNames() {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const matches = [];
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      if (!node.parentElement.closest('script, style, textarea, .tanaw-name') && /\btanaw\b/i.test(node.nodeValue)) matches.push(node);
+    }
+    for (const node of matches) {
+      const fragment = document.createDocumentFragment();
+      for (const part of node.nodeValue.split(/(\btanaw\b)/gi)) {
+        if (/^tanaw$/i.test(part)) {
+          const name = document.createElement('span');
+          name.className = 'tanaw-name';
+          name.textContent = 'TANAW';
+          fragment.append(name);
+        } else fragment.append(document.createTextNode(part));
+      }
+      node.replaceWith(fragment);
+    }
+  }
+  styleTanawNames();
+
   function setLang(lang) {
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
@@ -604,6 +638,7 @@
     document.querySelectorAll('[data-en][data-fil]').forEach(a => {
       a.textContent = a.getAttribute('data-' + lang);
     });
+    styleTanawNames();
   }
 
   // ---- TANAW KEYBOARD DEMO ----

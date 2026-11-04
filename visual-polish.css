@@ -58,3 +58,31 @@
   .hero { background-size: auto, 28px 28px; }
   .stat + .stat { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: 1.5rem; }
 }
+
+/* 5. Slightly larger hero content; dot texture keeps its original sizing. */
+.hero-tag { font-size: .81rem; padding: .45rem 1rem; margin-bottom: 2.25rem; }
+.hero-title { font-size: clamp(3.36rem, 5.6vw, 6.16rem); margin-bottom: 1.68rem; }
+.hero-desc { font-size: 1.18rem; max-width: 493px; margin-bottom: 2.8rem; }
+.hero-actions { gap: 1.12rem; }
+.hero .btn-primary { font-size: .9rem; padding: 1rem 2.24rem; }
+.hero .btn-ghost { font-size: .9rem; gap: .56rem; }
+.hero .eye-ring { width: min(470px, 42.56vw); height: min(470px, 42.56vw); }
+.hero .eye-ring::before { inset: 18px; }
+.hero .eye-ring::after { inset: 40px; }
+.hero .eye-core { width: 157px; height: 157px; }
+.hero .eye-pupil-wrapper, .hero .eye-pupil { width: 67px; height: 67px; }
+.hero .eye-pupil::after { top: 13.5px; left: 13.5px; width: 16px; height: 16px; }
+.hero .eye-iris-ring { inset: 7px; }
+.hero .scan-line { width: min(470px, 42.56vw); }
+.hero .floating-key { font-size: .9rem; padding: 1.12rem 1.34rem; min-height: 63px; gap: 1.12rem; border-radius: 9px; }
+.hero .floating-key::after { font-size: 1.29rem; }
+.hero::before { width: 67.2vw; height: 67.2vw; }
+.hero::after { width: 39.2vw; height: 39.2vw; }
+.hero .hero-keyboard { width: clamp(627px, 65vw, 1120px); }
+
+@media (max-width: 900px) {
+  .hero-visual { min-height: 392px; }
+  .hero .eye-ring { width: min(314px, 100%); height: auto; aspect-ratio: 1; }
+  .hero .scan-line { width: 100%; }
+  .hero .floating-key { font-size: .81rem; padding: .95rem; min-height: 56px; gap: .67rem; }
+}
