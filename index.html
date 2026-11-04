@@ -100,6 +100,9 @@
     .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 3.5vw, 3.5rem); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1rem; }
     .section-title em { font-style: italic; color: var(--gray-400); }
 
+    #for-title { color: var(--white); font-style: normal; white-space: nowrap; font-size: clamp(1.35rem, 3.5vw, 3.5rem); }
+    #for-title em { color: inherit; font-style: normal; }
+    #for-title .audience-heading-muted { color: var(--gray-400); }
     /* HOW IT WORKS */
     .hiw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 5rem; align-items: start; }
     .steps { display: flex; flex-direction: column; gap: 0; }
@@ -259,7 +262,7 @@
 <section class="hero" id="main-content" tabindex="-1" style="padding-top: 8rem;">
   <div class="hero-keyboard hero-keyboard-top" aria-hidden="true"></div>
   <div class="hero-left">
-    <div class="hero-tag" id="hero-tag">Assistive Communication Technology</div>
+    <div class="hero-tag" id="hero-tag">Augmentative and Alternative Communication</div>
     <h1 class="hero-title">
       <span data-en="For every gaze.<br><em>You are heard.</em>" data-fil="Titigan.<br><em>I-type.</em>">For every gaze.<br><em>You are heard.</em></span>
     </h1>
@@ -444,7 +447,7 @@
 <!-- WHO IT'S FOR -->
 <section id="for">
   <div class="section-eyebrow" id="for-eyebrow">Patients & Caregivers</div>
-  <h2 class="section-title" id="for-title">Who Tanaw<br><em>helps.</em></h2>
+  <h2 class="section-title" id="for-title"><span class="audience-heading-muted">Who</span> TANAW <span class="audience-heading-muted">helps?</span></h2>
   <div class="audience-grid">
     <div class="audience-card">
       <div class="audience-tag" id="aud1-tag">Neurological</div>
@@ -504,7 +507,7 @@
   // ---- LANGUAGE DATA ----
   const strings = {
     en: {
-      'hero-tag': 'Assistive Communication Technology',
+      'hero-tag': 'Augmentative and Alternative Communication',
       'hero-desc': 'Tanaw is a gaze-based digital keyboard that helps patients with motor and speech impairment reclaim their voice — operated through eye movement, with easy caregiver setup.',
       'btn-access': 'Request Early Access',
       'btn-how': 'See how it works',
@@ -539,7 +542,7 @@
       'f6-title': 'Privacy-First Design',
       'f6-desc': 'All processing happens on-device. No sensitive health or communication data is sent to external servers.',
       'for-eyebrow': 'Patients & Caregivers',
-      'for-title': 'Who Tanaw<br><em>helps.</em>',
+      'for-title': '<span class="audience-heading-muted">Who</span> TANAW <span class="audience-heading-muted">helps?</span>',
       'aud1-tag': 'Neurological', 'aud1-title': 'ALS & Motor Neuron Disease', 'aud1-desc': 'As voluntary muscle control declines, Tanaw preserves the ability to communicate — giving patients independence for as long as possible.',
       'aud2-tag': 'Developmental', 'aud2-title': 'Cerebral Palsy', 'aud2-desc': 'Individuals with limited limb control can use gaze to compose messages, make choices, and engage in education and social life.',
       'aud3-tag': 'Acquired Injury', 'aud3-title': 'Spinal Cord Injury', 'aud3-desc': 'Patients with high-level cervical injuries retain full cognitive function but lack motor ability — Tanaw gives them a voice without physical effort.',
