@@ -14,6 +14,7 @@ body.in-entrance nav { opacity: 0; visibility: hidden; pointer-events: none; }
 .entrance-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: center; justify-content: center; isolation: isolate; }
 .entrance-heading { position: absolute; top: 7%; text-align: center; z-index: 2; }
 .entrance-heading h1 { font: clamp(28px, 4.4vw, 58px)/1.08 'DM Serif Display', serif; letter-spacing: -.035em; }
+.entrance-heading h1 em { font-style: italic; color: var(--gray-400); }
 .laptop { width: min(68vw, 850px); position: relative; transform-origin: 50% 50%; will-change: transform; margin-top: 12vh; }
 .laptop-lid { padding: 18px 12px 12px; background: linear-gradient(130deg, #606064, #202023 30%, #414145 80%, #858589); border: 1px solid #999; border-radius: 20px 20px 8px 8px; box-shadow: 0 35px 90px #000; position: relative; }
 .laptop-camera { position: absolute; top: 6px; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: 50%; background: #080a0d; box-shadow: 0 0 0 1px #777; }
