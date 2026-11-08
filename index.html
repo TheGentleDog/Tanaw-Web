@@ -230,9 +230,11 @@
         gap: 2rem 1rem;
         justify-items: center;
       }
-      .team-member { grid-row: auto; width: 100%; max-width: 200px; }
+      .team-member { display: flex; flex-direction: column; grid-row: auto; width: 100%; max-width: 200px; }
       .team-member:last-child { grid-column: 1 / -1; }
-      .team-member-link { width: 144px; max-width: 100%; margin-inline: auto; }
+      .team-member-link { flex-shrink: 0; width: 144px; max-width: 100%; margin-inline: auto; }
+      .team-member figcaption { display: flex; flex-direction: column; flex: 1; }
+      .team-member-role { margin-top: auto; padding-top: .35rem; }
       .cta-section { padding: 5rem 1.5rem; }
       footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
     }
