@@ -76,8 +76,36 @@
 .hero .hero-keyboard { width: clamp(627px, 65vw, 1120px); }
 
 @media (max-width: 900px) {
-  .hero-visual { min-height: 392px; }
-  .hero .eye-ring { width: min(314px, 100%); height: auto; aspect-ratio: 1; }
+  .hero-visual {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+    min-height: 0;
+  }
+  .hero .eye-ring {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+    width: min(314px, 100%);
+    height: auto;
+    aspect-ratio: 1;
+  }
   .hero .scan-line { width: 100%; }
-  .hero .floating-key { font-size: .81rem; padding: .95rem; min-height: 56px; gap: .67rem; }
+  .hero .floating-key {
+    position: static;
+    min-width: 0;
+    max-width: none;
+    align-self: stretch;
+    justify-content: space-between;
+    font-size: .81rem;
+    padding: .95rem;
+    min-height: 56px;
+    gap: .67rem;
+    overflow-wrap: anywhere;
+  }
+  .hero .floating-key::after { flex-shrink: 0; }
+  .hero .fk1 { grid-column: 1; grid-row: 1; }
+  .hero .fk2 { grid-column: 2; grid-row: 1; }
+  .hero .fk3 { grid-column: 1; grid-row: 3; }
+  .hero .fk4 { grid-column: 2; grid-row: 3; }
 }
